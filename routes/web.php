@@ -35,6 +35,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('movimentacao', 'MovimentacaoBancariaController@create')->name('movimentacao.create');
         Route::post('movimentacao', 'MovimentacaoBancariaController@store')->name('movimentacao.store');
+
+        Route::get('produto', 'ProdutoController@create')->name('produto.create');
+        Route::post('produto', 'ProdutoController@store')->name('produto.store');
     });
 
     // Rotas de controle
@@ -53,6 +56,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('fluxo', 'FluxoDiarioController@show')->name('fluxo.show');
 
         Route::get('movimentacao', 'MovimentacaoBancariaController@show')->name('movimentacao.show');
+
+        Route::get('produto', 'ProdutoController@show')->name('produto.show');
     });
 
     // Rotas de Edição
@@ -78,6 +83,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('boleto/{id}', 'BoletoController@edit')->name('boleto.edit');
         Route::post('boleto', 'BoletoController@update')->name('boleto.update');
+
+        Route::get('produto/{id}', 'ProdutoController@edit')->name('produto.edit');
+        Route::post('produto', 'ProdutoController@update')->name('produto.update');
     });
 
     // Rotas de Exclusão
@@ -89,6 +97,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('conta/{id}', 'ContaController@delete')->name('conta.delete');
         Route::get('cheque/{id}', 'ChequeController@delete')->name('cheque.delete');
         Route::get('boleto/{id}', 'BoletoController@delete')->name('boleto.delete');
+        Route::get('produto/{id}', 'ProdutoController@delete')->name('produto.delete');
     });
 
 });

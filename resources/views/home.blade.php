@@ -30,8 +30,9 @@
             <nav class="navbar navbar-inversed nav-justified well-sm ">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="{{route('admin')}}"><img src="/img/nosso-pao.png"
-                                                                               class="img-responsive-mod"></a>
+                        <a class="navbar-brand" href="{{route('admin')}}">
+                            <img src="/img/nosso-pao.png" class="img-responsive-mod">
+                        </a>
                     </div>
                     <ul class="nav navbar-nav">
                         <li class="active"><a href={{route('admin')}}> Home </a></li>
@@ -44,6 +45,7 @@
                                 <li><a href={{route('folga.create')}}>Folga</a></li>
                                 <li><a href={{route('fluxo.create')}}>Fluxo-Diário</a></li>
                                 <li><a href={{route('funcionario.create')}}>Funcionário</a></li>
+                                <li><a href={{route('produto.create')}}>Produto</a></li>
                             </ul>
                         </li>
                         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -55,6 +57,7 @@
                                 <li><a href="{{route('fluxo.show')}}">Fluxos-Diários</a></li>
                                 <li><a href="{{route('folga.show')}}">Folgas</a></li>
                                 <li><a href="{{route('funcionario.show')}}">Funcionários</a></li>
+                                <li><a href="{{route('produto.show')}}">Produtos</a></li>
                             </ul>
                         </li>
                         <li><a href="#">Configurações</a></li>

@@ -29,6 +29,11 @@
                                 <p><a class="btn btn-lg btn-primary center-block" href="{{route('conta.create')}}" role="button">Cadastrar Conta</a></p>
                             </div>
 
+                            <div class="row azul col-md-2 well-sm center-block">
+                                <p class="lead"> <img src="/img/produto.png" class="center-block"/> </p>
+                                <p><a class="btn btn-lg btn-primary center-block" href="{{route('produto.create')}}" role="button">Cadastrar Produto</a></p>
+                            </div>
+
                         </div>
                 </div>
             </div>
