@@ -7,7 +7,7 @@
         <div class="wrapper">
             <form action={{route('login')}} method="POST" class="form-signin">
 
-                <h2 class="form-login-heading text-center"> <img src="/img/pao-nosso.jpeg" class="img-responsive-lg"> </h2>
+                <h2 class="form-login-heading text-center"> <img src="/img/nosso-pao-0.png" class="img-responsive-lg"> </h2>
                 <hr class="colorgraph"><br>
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                     <label for="email" class="control-label">E-mail: </label>
