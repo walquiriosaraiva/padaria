@@ -9,7 +9,7 @@ class MovimentacaoBancariaSeeder extends Seeder
     {
         MovimentacaoBancaria::create([
           'tipo' => 1,
-          'data' => "2017-04-24",
+          'data' => "2019-04-24",
           'descricao' => "Pagamento do boleto",
           'valor' => 750.00,
           'conta_id' => 1
@@ -17,7 +17,7 @@ class MovimentacaoBancariaSeeder extends Seeder
 
         MovimentacaoBancaria::create([
           'tipo' => 2,
-          'data' => "2017-04-24",
+          'data' => "2019-04-24",
           'descricao' => "Deposito",
           'valor' => 1000.00,
           'conta_id' => 1
@@ -25,7 +25,7 @@ class MovimentacaoBancariaSeeder extends Seeder
 
         MovimentacaoBancaria::create([
           'tipo' => 1,
-          'data' => "2017-04-24",
+          'data' => "2019-04-24",
           'descricao' => "Pagamento de Cheque",
           'valor' => 850.00,
           'conta_id' => 1

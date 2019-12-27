@@ -47,6 +47,10 @@ class FkTables extends Migration
         Schema::table('administrador', function ($table) {
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');;
         });
+
+        Schema::table('produto', function ($table) {
+            $table->foreign('unidade_medida_id')->references('id')->on('unidade_medida')->onDelete('cascade');;
+        });
     }
 
     public function down()

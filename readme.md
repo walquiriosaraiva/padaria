@@ -69,6 +69,14 @@ https://github.com/Daniel-Santos9/Sistema_padaria/tree/master/Padaria
 ## Atualizar as tabelas e inserindo dados###
 * `php artisan migrate:refresh --seed`
 
+## Inserir dados em uma tabela expecifica
+* `php artisan db:seed --class=BancoSeeder`
+
+## Caso precise gerar novamente o dumpautoload das classes novas
+* `Exemplo: Cridou a classe BancoSeeder tem que rodar o comando abaixo e em seguida`
+* `composer dumpautoload -o`
+* `php artisan db:seed --class=BancoSeeder`
+
 ## Permissões nas pastas 
 sudo chgrp -R www-data storage
 sudo chmod -R ug+rwx storage

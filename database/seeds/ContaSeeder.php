@@ -8,12 +8,12 @@ class ContaSeeder extends Seeder
     public function run()
     {
         Conta::create([
-        'banco' => 'Banco do Brasil',
-        'agencia' => '4718-7',
-        'tipo' => 1,
-        'numero' => '4781541',
-        'saldo' => 1000.00,
-        'administrador_id' => 1
+            'banco' => 'Banco do Brasil',
+            'agencia' => '4718-7',
+            'tipo' => 1,
+            'numero' => '4781541',
+            'saldo' => 1000.00,
+            'administrador_id' => 1
         ]);
     }
 }

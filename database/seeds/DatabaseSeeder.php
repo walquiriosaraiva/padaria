@@ -17,5 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FluxoDiarioSeeder::class);
         $this->call(FolgaSeeder::class);
         $this->call(BoletoSeeder::class);
+        $this->call(BancoSeeder::class);
+        $this->call(UnidadeMedidaSeeder::class);
     }
 }

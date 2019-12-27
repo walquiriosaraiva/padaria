@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Banco;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Model\Conta;
 
@@ -71,14 +73,14 @@ class ContaController extends Controller
      */
     public function bancos()
     {
-        return array(
-            1 => 'Banco do Brasil',
-            2 => 'Banco Bradesco',
-            3 => 'Caixa Econòmica',
-            4 => 'Banco Itaú',
-            5 => 'Banco BRB',
-            6 => 'Banco HSBC'
-        );
+        $bancos = DB::table('banco')->get();
+
+        $arBancos = array();
+        foreach ($bancos as $key => $value):
+            $arBancos[$value->id] = $value->nome;
+        endforeach;
+
+        return $arBancos;
     }
 
     /**

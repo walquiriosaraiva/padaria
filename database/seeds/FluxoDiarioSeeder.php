@@ -9,7 +9,7 @@ class FluxoDiarioSeeder extends Seeder
     {
         FluxoDiario::create([
             'cofre' => 14000.00,
-            'dia' => '2017-04-29',
+            'dia' => '2019-04-29',
             'saldo' => 21500.00,
             'cartao' => 2000.00,
             'rendimento' => 7500.00,
@@ -22,7 +22,7 @@ class FluxoDiarioSeeder extends Seeder
 
         FluxoDiario::create([
             'cofre' => 13000.00,
-            'dia' => '2017-04-30',
+            'dia' => '2019-04-30',
             'saldo' => 16400.00,
             'cartao' => 500.00,
             'rendimento' => 3400.00,
