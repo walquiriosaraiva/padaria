@@ -62,6 +62,9 @@ https://github.com/Daniel-Santos9/Sistema_padaria/tree/master/Padaria
 
 ## Criar as Tabelas: ###
 * `php artisan migrate`
+* `php artisan key:generate`
+* `php artisan config:clear`
+* `php artisan config:cache`
 
 ## Atualizar as tabelas ###
 * `php artisan migrate:refresh`
