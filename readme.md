@@ -83,3 +83,14 @@ https://github.com/Daniel-Santos9/Sistema_padaria/tree/master/Padaria
 ## Permissões nas pastas 
 sudo chgrp -R www-data storage
 sudo chmod -R ug+rwx storage
+
+## ENTRADA ESTOQUE
+PRODUTO
+QUANTIDADE
+VALOR UNITÁRIO
+NOTA FISCAL
+
+## SAÍDA ESTOQUE
+PRODUTO
+QUANTIDADE
+VALOR VENDA

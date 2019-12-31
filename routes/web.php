@@ -38,6 +38,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('produto', 'ProdutoController@create')->name('produto.create');
         Route::post('produto', 'ProdutoController@store')->name('produto.store');
+
+        Route::get('entrada-estoque', 'EntradaEstoqueController@create')->name('entrada-estoque.create');
+        Route::post('entrada-estoque', 'EntradaEstoqueController@store')->name('entrada-estoque.store');
     });
 
     // Rotas de controle
@@ -58,6 +61,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('movimentacao', 'MovimentacaoBancariaController@show')->name('movimentacao.show');
 
         Route::get('produto', 'ProdutoController@show')->name('produto.show');
+
+        Route::get('entrada-estoque', 'EntradaEstoqueController@show')->name('entrada-estoque.show');
     });
 
     // Rotas de Edição
@@ -86,6 +91,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('produto/{id}', 'ProdutoController@edit')->name('produto.edit');
         Route::post('produto', 'ProdutoController@update')->name('produto.update');
+
+        Route::get('entrada-estoque/{id}', 'EntradaEstoqueController@edit')->name('entrada-estoque.edit');
+        Route::post('entrada-estoque', 'EntradaEstoqueController@update')->name('entrada-estoque.update');
     });
 
     // Rotas de Exclusão
@@ -98,6 +106,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('cheque/{id}', 'ChequeController@delete')->name('cheque.delete');
         Route::get('boleto/{id}', 'BoletoController@delete')->name('boleto.delete');
         Route::get('produto/{id}', 'ProdutoController@delete')->name('produto.delete');
+        Route::get('entrada-estoque/{id}', 'EntradaEstoqueController@delete')->name('entrada-estoque.delete');
     });
 
 });

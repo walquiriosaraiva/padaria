@@ -2,22 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\EntradaEstoque;
 use App\Model\Produto;
 use App\Model\UnidadeMedida;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class ProdutoController extends Controller
+class EntradaEstoqueController extends Controller
 {
     private $produto;
     private $unidade_medida;
+    private $entrada_estoque;
 
-    function __construct(Produto $produto, UnidadeMedida $unidadeMedida)
+    function __construct(Produto $produto, UnidadeMedida $unidadeMedida, EntradaEstoque $entradaEstoque)
     {
         $this->middleware('auth');
         $this->produto = $produto;
         $this->unidade_medida = $unidadeMedida;
+        $this->entrada_estoque = $entradaEstoque;
+
     }
 
     public function show()
@@ -27,14 +31,17 @@ class ProdutoController extends Controller
         var_dump($this->produto);
         exit;
         */
-        $produtos = $this->produto->all();
-        $count = $produtos->count();
+        $entradaEstoque = $this->entrada_estoque->all();
+        $count = $entradaEstoque->count();
 
-        foreach ($produtos as $chaveProduto => $descricaoProduto):
-            $descricaoProduto->setAttribute('unidade_medida', $this->getUnidadeMedida($descricaoProduto->unidade_medida_id));
+        foreach ($entradaEstoque as $key => $value):
+            $value->setAttribute('unidade_medida', $this->getUnidadeMedida($value->unidade_medida_id));
+            $value->setAttribute('produto', $this->getProduto($value->produto_id));
+            $value->setAttribute('val_total', 'R$ ' . number_format($value->quantidade * $value->val_unitario, 2, ',', '.'));
         endforeach;
 
-        return view('produto.show', compact('produtos', 'count'));
+
+        return view('entrada-estoque.show', compact('entradaEstoque', 'count'));
     }
 
     public function getUnidadeMedida($id)
@@ -50,40 +57,57 @@ class ProdutoController extends Controller
         return $descricao;
     }
 
+    public function getProduto($id)
+    {
+        $produtos = $this->produto->all();
+        $descricao = '';
+        foreach ($produtos as $key => $value):
+            if ($id == $value->id):
+                $descricao = $value->descricao;
+            endif;
+        endforeach;
+
+        return $descricao;
+    }
+
     public function create()
     {
         $unidade_medida = $this->unidade_medida->all();
-        return view('produto.create', compact('unidade_medida'));
+        $produto = $this->produto->all();
+        return view('entrada-estoque.create', compact('unidade_medida', 'produto'));
     }
 
     public function store(Request $request)
     {
         $validador = Validator::make($request->all(), [
-            'descricao' => 'required',
+            'produto_id' => 'required',
+            'val_unitario' => 'required',
+            'quantidade' => 'required',
             'unidade_medida_id' => 'required|numeric'
         ]);
 
         if ($validador->fails()) :
-            return redirect()->route('produto.create')
+            return redirect()->route('entrada-estoque.create')
                 ->withErrors($validador)
                 ->withInput();
         else :
-            $this->produto->unidade_medida_id = $request->input('unidade_medida_id');
-            $this->produto->descricao = $request->input('descricao');
-            $this->produto->qtd_minimo = $request->input('qtd_minimo') ? $request->input('qtd_minimo') : 0;
-            $this->produto->val_unitario = $request->input('val_unitario') ? $request->input('val_unitario') : 0;
+            $this->entrada_estoque->unidade_medida_id = $request->input('unidade_medida_id');
+            $this->entrada_estoque->produto_id = $request->input('produto_id');
+            $this->entrada_estoque->quantidade = $request->input('quantidade');
+            $this->entrada_estoque->val_unitario = $request->input('val_unitario');
+            $this->entrada_estoque->num_nota_fiscal = $request->input('num_nota_fiscal') ? $request->input('num_nota_fiscal') : 0;
 
-            $produto_ins = $this->produto->save();
-            if ($produto_ins) :
-                return redirect()->route('produto.show')
+            $entradaEstoque_ins = $this->entrada_estoque->save();
+            if ($entradaEstoque_ins) :
+                return redirect()->route('entrada-estoque.show')
                     ->withInput()
-                    ->with(['inser' => true, 'produto' => $this->produto->descricao]);
+                    ->with(['inser' => true, 'produto' => $this->getProduto($this->entrada_estoque->produto_id) ]);
             endif;
         endif;
 
-        return redirect()->route('produto.show')
+        return redirect()->route('entrada-estoque.show')
             ->withInput()
-            ->with(['error' => true, 'produto' => 'Erro ao inserir o produto']);
+            ->with(['error' => true, 'entrada-estoque' => 'Erro ao inserir o produto']);
     }
 
     /**

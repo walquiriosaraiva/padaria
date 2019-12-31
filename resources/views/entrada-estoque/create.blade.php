@@ -1,6 +1,6 @@
 @extends('home')
 
-@section('titulo','Cadastrar Produto')
+@section('titulo','Cadastrar Entrada Estoque')
 
 @section('conteudo')
 
@@ -8,21 +8,22 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Cadastrar Produto</div>
+                    <div class="panel-heading">Cadastrar Entrada Estoque</div>
                     <div class="panel-body">
                         <form class="form-horizontal col-md-10 col-md-offset-1" role="form"
-                              action="{{route('produto.store')}}" method="post">
+                              action="{{route('entrada-estoque.store')}}" method="post">
                             {{ csrf_field() }}
 
-                            <div class="form-group col-md-10{{ $errors->has('descricao') ? ' has-error' : '' }}">
-                                <label for="descricao" class="control-label">Descrição: </label>
-                                <input id="descricao" type="text" class="form-control" name="descricao"
-                                       value="{{ old('descricao') }}">
-                                @if ($errors->has('descricao'))
-                                    <span class="help-block">
-                                            <strong>{{ $errors->first('descricao') }}</strong>
-                                        </span>
-                                @endif
+                            <div class="form-group col-md-10{{ $errors->has('produto_id') ? ' has-error' : '' }}">
+                                <label for="produto_id" class="control-label">Produto: </label>
+                                <select class="form-control" data-live-search="true" id="produto_id"
+                                        name="produto_id">
+                                    <option data-tokens="ketchup mustard" value="">Selecione</option>
+                                    @foreach($produto as $key=>$value)
+                                        <option data-tokens="ketchup mustard"
+                                                value="{{ $value->id }}"> {{ $value->descricao }}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="form-group col-md-10 {{ $errors->has('unidade_medida_id') ? ' has-error' : '' }}">
@@ -43,13 +44,24 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-10{{ $errors->has('qtd_minimo') ? ' has-error' : '' }}">
-                                <label for="qtd_minimo" class="control-label"> Quantidade: </label>
-                                <input id="qtd_minimo" type="number" class="form-control" name="qtd_minimo"
-                                       value="{{ old('qtd_minimo') }}">
-                                @if ($errors->has('qtd_minimo'))
+                            <div class="form-group col-md-10{{ $errors->has('num_nota_fiscal') ? ' has-error' : '' }}">
+                                <label for="num_nota_fiscal" class="control-label"> Nota Fiscal: </label>
+                                <input id="num_nota_fiscal" type="number" class="form-control" name="num_nota_fiscal"
+                                       value="{{ old('num_nota_fiscal') }}">
+                                @if ($errors->has('num_nota_fiscal'))
                                     <span class="help-block">
-                                            <strong>{{ $errors->first('qtd_minimo') }}</strong>
+                                            <strong>{{ $errors->first('num_nota_fiscal') }}</strong>
+                                        </span>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-10{{ $errors->has('qtd_minimo') ? ' has-error' : '' }}">
+                                <label for="quantidade" class="control-label"> Quantidade: </label>
+                                <input id="quantidade" type="number" class="form-control" name="quantidade"
+                                       value="{{ old('quantidade') }}">
+                                @if ($errors->has('quantidade'))
+                                    <span class="help-block">
+                                            <strong>{{ $errors->first('quantidade') }}</strong>
                                         </span>
                                 @endif
                             </div>

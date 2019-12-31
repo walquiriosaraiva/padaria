@@ -1,13 +1,13 @@
 @extends('home')
 
-@section('titulo','Controle de Produtos')
+@section('titulo','Entrada')
 
 @section('conteudo')
     <div class="container">
         <div class="row">
             <div class="col-md-10">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Controle de Produtos</div>
+                    <div class="panel-heading">Entrada</div>
                     <div class="panel-body">
                         <div class="row col-md-10 col-md-offset-1 custyle">
 
@@ -46,43 +46,43 @@
                                     Você não possui nenhum produto cadastrado.
                                 </div>
 
-                                <a href="{{route('produto.create')}}">
+                                <a href="{{route('entrada-estoque.create')}}">
                                     <button type="button"
                                             class="btn btn-primary btn-lg btn-create col-md-3 col-md-offset-4">
-                                        <span class="glyphicon glyphicon-plus"></span> Produto
+                                        <span class="glyphicon glyphicon-plus"></span> Entrada Estoque
                                     </button>
                                 </a>
                             @else
                                 <table class="table table-striped bunitu">
                                     <thead>
                                     <div class="col col-xs-12 text-right">
-                                        <a href="{{route('produto.create')}}">
+                                        <a href="{{route('entrada-estoque.create')}}">
                                             <button type="button" class="btn btn-sm btn-primary btn-create">
-                                                <span class="glyphicon glyphicon-plus"></span> Produto
+                                                <span class="glyphicon glyphicon-plus"></span> Entrada Estoque
                                             </button>
                                         </a>
                                     </div>
                                     <tr>
-                                        <th class="text-center">Código do Produto</th>
-                                        <th class="text-left">Descrição</th>
+                                        <th class="text-left">Produto</th>
                                         <th class="text-left">Unidade Medida</th>
                                         <th class="text-center">Quantidade</th>
                                         <th class="text-center">Valor Unitário</th>
+                                        <th class="text-center">Valor Total</th>
                                         <th class="col-lg-3 text-center">Ação</th>
                                     </tr>
                                     </thead>
-                                    @foreach($produtos as $produto)
+                                    @foreach($entradaEstoque as $estoque)
                                         <tr>
-                                            <td>{{$produto->id}}</td>
-                                            <td class="text-uppercase">{{$produto->descricao}} </td>
-                                            <td>{{$produto->unidade_medida}}</td>
-                                            <td class="text-center">{{$produto->qtd_minimo}} </td>
-                                            <td class="text-center">{{$produto->val_unitario}} </td>
+                                            <td class="text-uppercase">{{$estoque->produto}} </td>
+                                            <td>{{$estoque->unidade_medida}}</td>
+                                            <td class="text-center">{{$estoque->quantidade}} </td>
+                                            <td class="text-center">{{$estoque->val_unitario}} </td>
+                                            <td class="text-center">{{$estoque->val_total}} </td>
                                             <td class="text-center">
-                                                <a class='btn btn-info btn-xs' href="../editar/produto/{{$produto->id}}">
+                                                <a class='btn btn-info btn-xs' href="../editar/entrada-estoque/{{$estoque->id}}">
                                                     <span class="glyphicon glyphicon-edit"></span> Editar
                                                 </a>
-                                                <a onclick="return confirm('Deseja excluir esse registro?')" href="../deletar/produto/{{$produto->id}}"
+                                                <a onclick="return confirm('Deseja excluir esse registro?')" href="../deletar/entrada-estoque/{{$estoque->id}}"
                                                    class="btn btn-danger btn-xs">
                                                     <span class="glyphicon glyphicon-remove"></span> Excluir
                                                 </a>
