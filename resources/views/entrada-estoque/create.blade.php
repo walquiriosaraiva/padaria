@@ -83,7 +83,7 @@
                             <div class="form-group col-md-10">
                                 {!! csrf_field() !!}
                                 <button type="submit" class="control-label btn btn-primary">Cadastrar</button>
-                                <a class="control-label btn btn-danger" href="{{route('admin')}}">Cancelar</a>
+                                <a class="control-label btn btn-danger" href="{{route('entrada-estoque.show')}}">Cancelar</a>
                             </div>
                         </form>
                     </div>

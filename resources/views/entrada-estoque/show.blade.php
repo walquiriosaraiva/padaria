@@ -1,13 +1,13 @@
 @extends('home')
 
-@section('titulo','Entrada')
+@section('titulo','Entrada Estoque')
 
 @section('conteudo')
     <div class="container">
         <div class="row">
             <div class="col-md-10">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Entrada</div>
+                    <div class="panel-heading">Entrada Estoque</div>
                     <div class="panel-body">
                         <div class="row col-md-10 col-md-offset-1 custyle">
 
@@ -71,6 +71,17 @@
                                         <th class="col-lg-3 text-center">Ação</th>
                                     </tr>
                                     </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>TOTAL</th>
+                                        <th></th>
+                                        <th class="text-center">{{ $entradaEstoque->quantidade_total }}</th>
+                                        <th></th>
+                                        <th class="text-center">{{ $entradaEstoque->soma_total }}</th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
                                     @foreach($entradaEstoque as $estoque)
                                         <tr>
                                             <td class="text-uppercase">{{$estoque->produto}} </td>
@@ -89,6 +100,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                    </tbody>
                                 </table>
                             @endif
                         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\EntradaEstoque;
 use App\Model\Produto;
 use App\Model\UnidadeMedida;
 use Illuminate\Http\Request;
@@ -13,6 +14,11 @@ class ProdutoController extends Controller
     private $produto;
     private $unidade_medida;
 
+    /**
+     * ProdutoController constructor.
+     * @param Produto $produto
+     * @param UnidadeMedida $unidadeMedida
+     */
     function __construct(Produto $produto, UnidadeMedida $unidadeMedida)
     {
         $this->middleware('auth');
@@ -20,6 +26,9 @@ class ProdutoController extends Controller
         $this->unidade_medida = $unidadeMedida;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show()
     {
         /*
@@ -32,11 +41,68 @@ class ProdutoController extends Controller
 
         foreach ($produtos as $chaveProduto => $descricaoProduto):
             $descricaoProduto->setAttribute('unidade_medida', $this->getUnidadeMedida($descricaoProduto->unidade_medida_id));
+            $descricaoProduto->setAttribute('saldo_estoque', $this->getSaldoEntradaEstoque($descricaoProduto->id) + $this->getSaldoSaidaEstoque($descricaoProduto->id));
+            $descricaoProduto->setAttribute('unitario', 'R$ ' . $this->getValUnitarioEntrada($descricaoProduto->id)['val_unitario']);
         endforeach;
 
         return view('produto.show', compact('produtos', 'count'));
     }
 
+    /**
+     * @param $produto_id
+     * @return mixed
+     */
+    public function getValUnitarioEntrada($produto_id)
+    {
+        $entradaEstoque = DB::table('entrada_estoque')->where('produto_id', '=', $produto_id)->get()->first();
+
+        $arDados = array('val_unitario' => 0, 'quantidade' => 0);
+        if (!empty($entradaEstoque) && $entradaEstoque->val_unitario > 0):
+            $arDados['val_unitario'] = number_format($entradaEstoque->val_unitario, 2, ',', '.');
+            $arDados['quantidade'] = $entradaEstoque->quantidade;
+        endif;
+
+        return $arDados;
+    }
+
+    /**
+     * @param $produto_id
+     * @return int
+     */
+    public function getSaldoEntradaEstoque($produto_id)
+    {
+        $entradaEstoque = DB::table('entrada_estoque')->where('produto_id', '=', $produto_id)->get();
+        $quantidade = 0;
+        foreach ($entradaEstoque as $key => $value):
+            if ($value->produto_id == $produto_id):
+                $quantidade += $value->quantidade;
+            endif;
+        endforeach;
+
+        return $quantidade;
+    }
+
+    /**
+     * @param $produto_id
+     * @return int
+     */
+    public function getSaldoSaidaEstoque($produto_id)
+    {
+        $saidaEstoque = DB::table('saida_estoque')->where('produto_id', '=', $produto_id)->get();
+        $quantidade = 0;
+        foreach ($saidaEstoque as $key => $value):
+            if ($value->produto_id == $produto_id):
+                $quantidade = $value->quantidade;
+            endif;
+        endforeach;
+
+        return $quantidade;
+    }
+
+    /**
+     * @param $id
+     * @return mixed|string
+     */
     public function getUnidadeMedida($id)
     {
         $unidade_medida = $this->unidade_medida->all();
@@ -50,12 +116,19 @@ class ProdutoController extends Controller
         return $descricao;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         $unidade_medida = $this->unidade_medida->all();
         return view('produto.create', compact('unidade_medida'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $validador = Validator::make($request->all(), [

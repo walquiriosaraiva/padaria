@@ -66,8 +66,9 @@
                                         <th class="text-center">Código do Produto</th>
                                         <th class="text-left">Descrição</th>
                                         <th class="text-left">Unidade Medida</th>
-                                        <th class="text-center">Quantidade</th>
                                         <th class="text-center">Valor Unitário</th>
+                                        <th class="text-center">Saldo em Estque</th>
+                                        <th class="text-center">Total</th>
                                         <th class="col-lg-3 text-center">Ação</th>
                                     </tr>
                                     </thead>
@@ -76,8 +77,9 @@
                                             <td>{{$produto->id}}</td>
                                             <td class="text-uppercase">{{$produto->descricao}} </td>
                                             <td>{{$produto->unidade_medida}}</td>
-                                            <td class="text-center">{{$produto->qtd_minimo}} </td>
-                                            <td class="text-center">{{$produto->val_unitario}} </td>
+                                            <td class="text-center">{{$produto->unitario}} </td>
+                                            <td class="text-center">{{$produto->saldo_estoque}} </td>
+                                            <td class="text-center">{{$produto->val_total}} </td>
                                             <td class="text-center">
                                                 <a class='btn btn-info btn-xs' href="../editar/produto/{{$produto->id}}">
                                                     <span class="glyphicon glyphicon-edit"></span> Editar

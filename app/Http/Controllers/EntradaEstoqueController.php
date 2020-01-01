@@ -31,15 +31,19 @@ class EntradaEstoqueController extends Controller
         var_dump($this->produto);
         exit;
         */
-        $entradaEstoque = $this->entrada_estoque->all();
+        $entradaEstoque = $this->entrada_estoque->all()->sortBy("produto_id");
         $count = $entradaEstoque->count();
-
+        $qtdTotal = 0;
+        $somaTotal = 0;
         foreach ($entradaEstoque as $key => $value):
             $value->setAttribute('unidade_medida', $this->getUnidadeMedida($value->unidade_medida_id));
             $value->setAttribute('produto', $this->getProduto($value->produto_id));
             $value->setAttribute('val_total', 'R$ ' . number_format($value->quantidade * $value->val_unitario, 2, ',', '.'));
+            $qtdTotal += $value->quantidade;
+            $somaTotal += $value->quantidade * $value->val_unitario;
         endforeach;
-
+        $entradaEstoque->quantidade_total = $qtdTotal;
+        $entradaEstoque->soma_total = 'R$ ' . number_format($somaTotal, 2, ',', '.');
 
         return view('entrada-estoque.show', compact('entradaEstoque', 'count'));
     }
@@ -116,17 +120,17 @@ class EntradaEstoqueController extends Controller
      */
     public function delete($id)
     {
-        $produto = $this->produto->find($id);
+        $entradaEstoque = $this->entrada_estoque->find($id);
 
-        if ($produto->delete()) :
-            return redirect()->route('produto.show')
+        if ($entradaEstoque->delete()) :
+            return redirect()->route('entrada-estoque.show')
                 ->withInput()
-                ->with(['delete' => true, 'produto' => $produto->descricao]);
+                ->with(['delete' => true, 'produto' => $this->getProduto($entradaEstoque->produto_id)]);
         endif;
 
-        return redirect()->route('produto.show')
+        return redirect()->route('entrada-estoque.show')
             ->withInput()
-            ->with(['error' => true, 'produto' => 'Erro ao excluir a conta']);
+            ->with(['error' => true, 'produto' => 'Erro ao excluir a entrada de estoque']);
     }
 
     /**
@@ -135,14 +139,15 @@ class EntradaEstoqueController extends Controller
      */
     public function edit($id)
     {
-        $produto = $this->produto->find($id);
+        $entradaEstoque = $this->entrada_estoque->find($id);
         $unidade_medida = $this->unidade_medida->all();
+        $produto = $this->produto->all();
 
-        if (empty($produto)) :
+        if (empty($entradaEstoque)) :
             return "Aconteceu um erro";
         endif;
 
-        return view('produto.edit', compact('produto', 'unidade_medida'));
+        return view('entrada-estoque.edit', compact('produto', 'unidade_medida', 'entradaEstoque'));
     }
 
     /**
@@ -151,10 +156,12 @@ class EntradaEstoqueController extends Controller
      */
     function update(Request $request)
     {
-        $produto = $this->produto->find($request->input('id'));
+        $entradaEstoque = $this->entrada_estoque->find($request->input('id'));
 
         $validador = Validator::make($request->all(), [
-            'descricao' => 'required',
+            'produto_id' => 'required',
+            'val_unitario' => 'required',
+            'quantidade' => 'required',
             'unidade_medida_id' => 'required|numeric'
         ]);
 
@@ -164,22 +171,23 @@ class EntradaEstoqueController extends Controller
                 ->withInput($request->all());
         else :
 
-            $produto->unidade_medida_id = $request->input('unidade_medida_id');
-            $produto->descricao = $request->input('descricao');
-            $produto->qtd_minimo = $request->input('qtd_minimo') ? $request->input('qtd_minimo') : 0;
-            $produto->val_unitario = $request->input('val_unitario') ? $request->input('val_unitario') : 0;
+            $entradaEstoque->unidade_medida_id = $request->input('unidade_medida_id');
+            $entradaEstoque->produto_id = $request->input('produto_id');
+            $entradaEstoque->quantidade = $request->input('quantidade');
+            $entradaEstoque->val_unitario = $request->input('val_unitario');
+            $entradaEstoque->num_nota_fiscal = $request->input('num_nota_fiscal') ? $request->input('num_nota_fiscal') : 0;
 
-            $produto_upt = $produto->save();
-            if ($produto_upt) :
-                return redirect()->route('produto.show')
+            $entradaEstoque_upt = $entradaEstoque->save();
+            if ($entradaEstoque_upt) :
+                return redirect()->route('entrada-estoque.show')
                     ->withInput()
-                    ->with(['update' => true, 'produto' => $produto->descricao]);
+                    ->with(['update' => true, 'produto' => $this->getProduto($entradaEstoque->produto_id)]);
             endif;
         endif;
 
-        return redirect()->route('produto.show')
+        return redirect()->route('entrada-estoque.show')
             ->withInput()
-            ->with(['error' => true, 'produto' => 'Erro ao atualizar a conta']);
+            ->with(['error' => true, 'produto' => 'Erro ao atualizar a entrada estoque']);
     }
 
 }
