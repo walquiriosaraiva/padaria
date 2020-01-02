@@ -63,6 +63,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('produto', 'ProdutoController@show')->name('produto.show');
 
         Route::get('entrada-estoque', 'EntradaEstoqueController@show')->name('entrada-estoque.show');
+        Route::post('entrada-estoque', 'EntradaEstoqueController@show')->name('entrada-estoque.show');
     });
 
     // Rotas de Edição

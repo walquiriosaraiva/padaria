@@ -40,7 +40,31 @@
                                     </button>
                                 </div>
                             @endif
-
+                            <div class="panel-body">
+                                <form class="form-horizontal col-md-12 col-md-offset-1" role="form"
+                                      action="{{route('entrada-estoque.show')}}" method="post">
+                                    {{ csrf_field() }}
+                                    <div class="form-group col-md-10{{ $errors->has('produto_id') ? ' has-error' : '' }}">
+                                        <label for="produto_id" class="control-label">Produto: </label>
+                                        <select class="form-control" data-live-search="true" id="produto_id"
+                                                name="produto_id">
+                                            <option data-tokens="ketchup mustard" value="">Selecione</option>
+                                            @foreach($produto as $key=>$value)
+                                                <option data-tokens="ketchup mustard"
+                                                        value="{{ $value->id }}"> {{ $value->descricao }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-10{{ $errors->has('num_nota_fiscal') ? ' has-error' : '' }}">
+                                        <label for="created_at" class="control-label"> Data: </label>
+                                        <input id="created_at" type="date" class="form-control" name="created_at"
+                                               value="{{ old('created_at') }}">
+                                    </div>
+                                    <div class="form-group col-md-10">
+                                        <button type="submit" class="control-label btn btn-primary">Pesquisar</button>
+                                    </div>
+                                </form>
+                            </div>
                             @if($count == 0)
                                 <div class="alert alert-danger btn-lg col-md-10 col-md-offset-1 danger">
                                     Você não possui nenhum produto cadastrado.
@@ -90,10 +114,12 @@
                                             <td class="text-center">{{$estoque->val_unitario}} </td>
                                             <td class="text-center">{{$estoque->val_total}} </td>
                                             <td class="text-center">
-                                                <a class='btn btn-info btn-xs' href="../editar/entrada-estoque/{{$estoque->id}}">
+                                                <a class='btn btn-info btn-xs'
+                                                   href="../editar/entrada-estoque/{{$estoque->id}}">
                                                     <span class="glyphicon glyphicon-edit"></span> Editar
                                                 </a>
-                                                <a onclick="return confirm('Deseja excluir esse registro?')" href="../deletar/entrada-estoque/{{$estoque->id}}"
+                                                <a onclick="return confirm('Deseja excluir esse registro?')"
+                                                   href="../deletar/entrada-estoque/{{$estoque->id}}"
                                                    class="btn btn-danger btn-xs">
                                                     <span class="glyphicon glyphicon-remove"></span> Excluir
                                                 </a>

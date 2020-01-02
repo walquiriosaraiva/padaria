@@ -24,14 +24,24 @@ class EntradaEstoqueController extends Controller
 
     }
 
-    public function show()
+    public function show(Request $request)
     {
         /*
         echo '<pre>';
         var_dump($this->produto);
         exit;
         */
-        $entradaEstoque = $this->entrada_estoque->all()->sortBy("produto_id");
+        $data = $request->all();
+        if (isset($data['created_at']) && $data['created_at'] || isset($data['produto_id']) && $data['produto_id']):
+            if ($data['created_at']):
+                $entradaEstoque = $this->entrada_estoque->all()->where('created_at', '=', $data['created_at'])->sortBy("produto_id");
+            else:
+                $entradaEstoque = $this->entrada_estoque->all()->where('produto_id', '=', $data['produto_id'])->sortBy("produto_id");
+            endif;
+        else:
+            $entradaEstoque = $this->entrada_estoque->all()->sortBy("produto_id");
+        endif;
+
         $count = $entradaEstoque->count();
         $qtdTotal = 0;
         $somaTotal = 0;
@@ -45,7 +55,8 @@ class EntradaEstoqueController extends Controller
         $entradaEstoque->quantidade_total = $qtdTotal;
         $entradaEstoque->soma_total = 'R$ ' . number_format($somaTotal, 2, ',', '.');
 
-        return view('entrada-estoque.show', compact('entradaEstoque', 'count'));
+        $produto = $this->produto->all();
+        return view('entrada-estoque.show', compact('entradaEstoque', 'count', 'produto'));
     }
 
     public function getUnidadeMedida($id)
@@ -105,7 +116,7 @@ class EntradaEstoqueController extends Controller
             if ($entradaEstoque_ins) :
                 return redirect()->route('entrada-estoque.show')
                     ->withInput()
-                    ->with(['inser' => true, 'produto' => $this->getProduto($this->entrada_estoque->produto_id) ]);
+                    ->with(['inser' => true, 'produto' => $this->getProduto($this->entrada_estoque->produto_id)]);
             endif;
         endif;
 
