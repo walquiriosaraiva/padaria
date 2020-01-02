@@ -51,14 +51,14 @@
                                             <option data-tokens="ketchup mustard" value="">Selecione</option>
                                             @foreach($produto as $key=>$value)
                                                 <option data-tokens="ketchup mustard"
-                                                        value="{{ $value->id }}"> {{ $value->descricao }}</option>
+                                                        value="{{ $value->id }}" {{ $data['produto_id'] == $value->id ? 'selected' : '' }}> {{ $value->descricao }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group col-md-10{{ $errors->has('num_nota_fiscal') ? ' has-error' : '' }}">
                                         <label for="created_at" class="control-label"> Data: </label>
                                         <input id="created_at" type="date" class="form-control" name="created_at"
-                                               value="{{ old('created_at') }}">
+                                               value="{{ $data['created_at'] }}">
                                     </div>
                                     <div class="form-group col-md-10">
                                         <button type="submit" class="control-label btn btn-primary">Pesquisar</button>

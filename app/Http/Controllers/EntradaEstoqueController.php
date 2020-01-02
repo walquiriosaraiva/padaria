@@ -33,12 +33,25 @@ class EntradaEstoqueController extends Controller
         */
         $data = $request->all();
         if (isset($data['created_at']) && $data['created_at'] || isset($data['produto_id']) && $data['produto_id']):
-            if ($data['created_at']):
-                $entradaEstoque = $this->entrada_estoque->all()->where('created_at', '=', $data['created_at'])->sortBy("produto_id");
-            else:
-                $entradaEstoque = $this->entrada_estoque->all()->where('produto_id', '=', $data['produto_id'])->sortBy("produto_id");
+            if (isset($data['created_at']) && $data['created_at'] && isset($data['produto_id']) && $data['produto_id']):
+                $entradaEstoque = $this->entrada_estoque->all()
+                    ->where('created_at', '>=', $data['created_at'].' 01:01:00')
+                    ->where('created_at', '<=', $data['created_at'].' 23:59:00')
+                    ->where('produto_id', '=', $data['produto_id'])
+                    ->sortBy("produto_id");
+            elseif(isset($data['created_at']) && $data['created_at'] && !isset($data['produto_id']) && !$data['produto_id']):
+                $entradaEstoque = $this->entrada_estoque->all()
+                    ->where('created_at', '>=', $data['created_at'].' 01:01:00')
+                    ->where('created_at', '<=', $data['created_at'].' 23:59:00')
+                    ->sortBy("produto_id");
+            elseif(!isset($data['created_at']) && !$data['created_at'] && isset($data['produto_id']) && $data['produto_id']):
+                $entradaEstoque = $this->entrada_estoque->all()
+                    ->where('produto_id', '=', $data['produto_id'])
+                    ->sortBy("produto_id");
             endif;
         else:
+            $data['created_at'] = null;
+            $data['produto_id'] = null;
             $entradaEstoque = $this->entrada_estoque->all()->sortBy("produto_id");
         endif;
 
@@ -56,7 +69,7 @@ class EntradaEstoqueController extends Controller
         $entradaEstoque->soma_total = 'R$ ' . number_format($somaTotal, 2, ',', '.');
 
         $produto = $this->produto->all();
-        return view('entrada-estoque.show', compact('entradaEstoque', 'count', 'produto'));
+        return view('entrada-estoque.show', compact('entradaEstoque', 'count', 'produto', 'data'));
     }
 
     public function getUnidadeMedida($id)
