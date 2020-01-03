@@ -137,6 +137,7 @@ class EntradaEstoqueController extends Controller
             $this->entrada_estoque->produto_id = $request->input('produto_id');
             $this->entrada_estoque->quantidade = $request->input('quantidade');
             $this->entrada_estoque->val_unitario = $request->input('val_unitario');
+            $this->entrada_estoque->user_id = auth()->id();
             $this->entrada_estoque->num_nota_fiscal = $request->input('num_nota_fiscal') ? $request->input('num_nota_fiscal') : 0;
 
             $entradaEstoque_ins = $this->entrada_estoque->save();
@@ -214,6 +215,7 @@ class EntradaEstoqueController extends Controller
             $entradaEstoque->produto_id = $request->input('produto_id');
             $entradaEstoque->quantidade = $request->input('quantidade');
             $entradaEstoque->val_unitario = $request->input('val_unitario');
+            $entradaEstoque->user_id = auth()->id();
             $entradaEstoque->num_nota_fiscal = $request->input('num_nota_fiscal') ? $request->input('num_nota_fiscal') : 0;
 
             $entradaEstoque_upt = $entradaEstoque->save();

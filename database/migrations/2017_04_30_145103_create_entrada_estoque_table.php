@@ -15,6 +15,7 @@ class CreateEntradaEstoqueTable extends Migration
             $table->decimal('val_unitario',8,2);
             $table->unsignedInteger('produto_id');
             $table->unsignedInteger('unidade_medida_id');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }

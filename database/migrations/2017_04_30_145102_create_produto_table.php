@@ -13,6 +13,7 @@ class CreateProdutoTable extends Migration
             $table->string('descricao',200);
             $table->integer('qtd_minimo');
             $table->unsignedInteger('unidade_medida_id');
+            $table->unsignedInteger('user_id');
             $table->decimal('val_unitario',8,2);
             $table->timestamps();
         });

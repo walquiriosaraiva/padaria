@@ -138,6 +138,7 @@ class SaidaEstoqueController extends Controller
             $this->saida_estoque->produto_id = $request->input('produto_id');
             $this->saida_estoque->quantidade = $request->input('quantidade');
             $this->saida_estoque->val_unitario = $request->input('val_unitario');
+            $this->saida_estoque->user_id = auth()->id();
             $this->saida_estoque->num_cupom = $request->input('num_cupom') ? $request->input('num_cupom') : 0;
 
             $saidaEstoque_ins = $this->saida_estoque->save();
@@ -215,6 +216,7 @@ class SaidaEstoqueController extends Controller
             $saidaEstoque->produto_id = $request->input('produto_id');
             $saidaEstoque->quantidade = $request->input('quantidade');
             $saidaEstoque->val_unitario = $request->input('val_unitario');
+            $saidaEstoque->user_id = auth()->id();
             $saidaEstoque->num_cupom = $request->input('num_cupom') ? $request->input('num_cupom') : 0;
 
             $saidaEstoque_upt = $saidaEstoque->save();

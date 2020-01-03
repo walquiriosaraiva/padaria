@@ -13,7 +13,8 @@ class EntradaEstoque extends Model
         'quantidade',
         'val_unitario',
         'produto_id',
-        'unidade_medida_id'
+        'unidade_medida_id',
+        'user_id'
     ];
 
 }
