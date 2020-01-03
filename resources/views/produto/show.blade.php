@@ -53,55 +53,59 @@
                                     </button>
                                 </a>
                             @else
-                                <table class="table table-striped bunitu table-responsive">
-                                    <thead>
-                                    <div class="col col-xs-12 text-right">
-                                        <a href="{{route('produto.create')}}">
-                                            <button type="button" class="btn btn-sm btn-primary btn-create">
-                                                <span class="glyphicon glyphicon-plus"></span> Produto
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <tr>
-                                        <th class="col-lg-3 text-left">Descrição</th>
-                                        <th class="col-lg-2 text-left">Unidade Medida</th>
-                                        <th class="col-lg-2 text-center">Valor Unitário R$</th>
-                                        <th class="col-lg-2 text-center">Saldo em Estque</th>
-                                        <th class="col-lg-1 text-center">Total R$</th>
-                                        <th class="col-lg-2 text-center">Ação</th>
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr class="alert alert-warning">
-                                        <th>TOTAL</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th class="text-center">{{ $produtos->quantidade_total }}</th>
-                                        <th class="text-center">{{ $produtos->soma_total }}</th>
-                                        <th></th>
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    @foreach($produtos as $produto)
+                                <div class="table-responsive">
+                                    <table class="table table-striped bunitu">
+                                        <thead>
+                                        <div class="col col-xs-12 text-right">
+                                            <a href="{{route('produto.create')}}">
+                                                <button type="button" class="btn btn-sm btn-primary btn-create">
+                                                    <span class="glyphicon glyphicon-plus"></span> Produto
+                                                </button>
+                                            </a>
+                                        </div>
                                         <tr>
-                                            <td class="text-uppercase">{{$produto->descricao}} </td>
-                                            <td>{{$produto->unidade_medida}}</td>
-                                            <td class="text-center alert alert-success">{{$produto->unitario}} </td>
-                                            <td class="text-center alert alert-success">{{$produto->saldo_estoque}} </td>
-                                            <td class="text-center alert alert-success">{{$produto->total}} </td>
-                                            <td class="text-center">
-                                                <a class='btn btn-info btn-xs' href="../editar/produto/{{$produto->id}}">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </a>
-                                                <a onclick="return confirm('Deseja excluir esse registro?')" href="../deletar/produto/{{$produto->id}}"
-                                                   class="btn btn-danger btn-xs">
-                                                    <span class="glyphicon glyphicon-remove"></span> Excluir
-                                                </a>
-                                            </td>
+                                            <th class="col-lg-3 text-left">Descrição</th>
+                                            <th class="col-lg-2 text-left">Unidade Medida</th>
+                                            <th class="col-lg-2 text-center">Valor Unitário R$</th>
+                                            <th class="col-lg-2 text-center">Saldo em Estque</th>
+                                            <th class="col-lg-1 text-center">Total R$</th>
+                                            <th class="col-lg-2 text-center">Ação</th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tfoot>
+                                        <tr class="alert alert-warning">
+                                            <th>TOTAL</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th class="text-center">{{ $produtos->quantidade_total }}</th>
+                                            <th class="text-center">{{ $produtos->soma_total }}</th>
+                                            <th></th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        @foreach($produtos as $produto)
+                                            <tr>
+                                                <td class="text-uppercase">{{$produto->descricao}} </td>
+                                                <td>{{$produto->unidade_medida}}</td>
+                                                <td class="text-center alert alert-success">{{$produto->unitario}} </td>
+                                                <td class="text-center alert alert-success">{{$produto->saldo_estoque}} </td>
+                                                <td class="text-center alert alert-success">{{$produto->total}} </td>
+                                                <td class="text-center">
+                                                    <a class='btn btn-info btn-xs'
+                                                       href="../editar/produto/{{$produto->id}}">
+                                                        <span class="glyphicon glyphicon-edit"></span> Editar
+                                                    </a>
+                                                    <a onclick="return confirm('Deseja excluir esse registro?')"
+                                                       href="../deletar/produto/{{$produto->id}}"
+                                                       class="btn btn-danger btn-xs">
+                                                        <span class="glyphicon glyphicon-remove"></span> Excluir
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             @endif
                         </div>
                     </div>

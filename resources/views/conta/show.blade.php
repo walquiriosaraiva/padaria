@@ -53,43 +53,47 @@
                                     </button>
                                 </a>
                             @else
-                                <table class="table table-striped bunitu">
-                                    <thead>
-                                    <div class="col col-xs-12 text-right">
-                                        <a href="{{route('conta.create')}}">
-                                            <button type="button" class="btn btn-sm btn-primary btn-create">
-                                                <span class="glyphicon glyphicon-plus"></span> Conta
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <tr>
-                                        <th>N° da Conta</th>
-                                        <th>Tipo</th>
-                                        <th>Agência</th>
-                                        <th>Banco</th>
-                                        <th>Saldo</th>
-                                        <th class="text-center">Ação</th>
-                                    </tr>
-                                    </thead>
-                                    @foreach($contas as $conta)
+                                <div class="table-responsive">
+                                    <table class="table table-striped bunitu">
+                                        <thead>
+                                        <div class="col col-xs-12 text-right">
+                                            <a href="{{route('conta.create')}}">
+                                                <button type="button" class="btn btn-sm btn-primary btn-create">
+                                                    <span class="glyphicon glyphicon-plus"></span> Conta
+                                                </button>
+                                            </a>
+                                        </div>
                                         <tr>
-                                            <td>{{$conta->numero}}</td>
-                                            <td>{{$conta->tipo==1 ? "Corrente" : "Poupança"}}</td>
-                                            <td>{{$conta->agencia}} </td>
-                                            <td>{{$conta->banco}}</td>
-                                            <td>{{$conta->saldo}} </td>
-                                            <td class="text-center">
-                                                <a class='btn btn-info btn-xs' href="../editar/conta/{{$conta->id}}">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </a>
-                                                <a onclick="return confirm('Deseja excluir esse registro?')" href="../deletar/conta/{{$conta->id}}"
-                                                   class="btn btn-danger btn-xs">
-                                                    <span class="glyphicon glyphicon-remove"></span> Excluir
-                                                </a>
-                                            </td>
+                                            <th>N° da Conta</th>
+                                            <th>Tipo</th>
+                                            <th>Agência</th>
+                                            <th>Banco</th>
+                                            <th>Saldo</th>
+                                            <th class="text-center">Ação</th>
                                         </tr>
-                                    @endforeach
-                                </table>
+                                        </thead>
+                                        @foreach($contas as $conta)
+                                            <tr>
+                                                <td>{{$conta->numero}}</td>
+                                                <td>{{$conta->tipo==1 ? "Corrente" : "Poupança"}}</td>
+                                                <td>{{$conta->agencia}} </td>
+                                                <td>{{$conta->banco}}</td>
+                                                <td>{{$conta->saldo}} </td>
+                                                <td class="text-center">
+                                                    <a class='btn btn-info btn-xs'
+                                                       href="../editar/conta/{{$conta->id}}">
+                                                        <span class="glyphicon glyphicon-edit"></span> Editar
+                                                    </a>
+                                                    <a onclick="return confirm('Deseja excluir esse registro?')"
+                                                       href="../deletar/conta/{{$conta->id}}"
+                                                       class="btn btn-danger btn-xs">
+                                                        <span class="glyphicon glyphicon-remove"></span> Excluir
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </table>
+                                </div>
                             @endif
                         </div>
 

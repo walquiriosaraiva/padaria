@@ -53,41 +53,43 @@
                                     </button>
                                 </a>
                             @else
-                                <table class="table table-striped bunitu">
-                                    <thead>
-                                    <div class="col col-xs-12 text-right">
-                                        <a href="{{route('funcionario.create')}}">
-                                            <button type="button" class="btn btn-sm btn-primary btn-create">
-                                                <span class="glyphicon glyphicon-plus"></span> Funcionários
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <tr>
-                                        <th>Funcionário</th>
-                                        <th>Cargo</th>
-                                        <th>Salário</th>
-                                        <th class="text-center">Ação</th>
-                                    </tr>
-                                    </thead>
-                                    @foreach($funcio as $func)
+                                <div class="table-responsive">
+                                    <table class="table table-striped bunitu">
+                                        <thead>
+                                        <div class="col col-xs-12 text-right">
+                                            <a href="{{route('funcionario.create')}}">
+                                                <button type="button" class="btn btn-sm btn-primary btn-create">
+                                                    <span class="glyphicon glyphicon-plus"></span> Funcionários
+                                                </button>
+                                            </a>
+                                        </div>
                                         <tr>
-                                            <td>{{$func->nome}}</td>
-                                            <td> {{$func->cargo->nome}}</td>
-                                            <td>{{$func->cargo->sal}}</td>
-                                            <td class="text-center">
-                                                <a class='btn btn-info btn-xs'
-                                                   href="../editar/funcionario/{{$func->id}}">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </a>
-                                                <a onclick="return confirm('Deseja excluir esse registro?')"
-                                                   href="../deletar/funcionario/{{$func->id}}"
-                                                   class="btn btn-danger btn-xs">
-                                                    <span class="glyphicon glyphicon-remove"></span> Excluir
-                                                </a>
-                                            </td>
+                                            <th>Funcionário</th>
+                                            <th>Cargo</th>
+                                            <th>Salário</th>
+                                            <th class="text-center">Ação</th>
                                         </tr>
-                                    @endforeach
-                                </table>
+                                        </thead>
+                                        @foreach($funcio as $func)
+                                            <tr>
+                                                <td>{{$func->nome}}</td>
+                                                <td> {{$func->cargo->nome}}</td>
+                                                <td>{{$func->cargo->sal}}</td>
+                                                <td class="text-center">
+                                                    <a class='btn btn-info btn-xs'
+                                                       href="../editar/funcionario/{{$func->id}}">
+                                                        <span class="glyphicon glyphicon-edit"></span> Editar
+                                                    </a>
+                                                    <a onclick="return confirm('Deseja excluir esse registro?')"
+                                                       href="../deletar/funcionario/{{$func->id}}"
+                                                       class="btn btn-danger btn-xs">
+                                                        <span class="glyphicon glyphicon-remove"></span> Excluir
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </table>
+                                </div>
                             @endif
                         </div>
                     </div>

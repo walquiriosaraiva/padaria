@@ -56,44 +56,47 @@
                                     </button>
                                 </a>
                             @else
-                                <table class="table table-striped bunitu">
-                                    <thead>
-                                    <div class="col col-xs-12 text-right">
-                                        <a href="{{route('fluxo.create')}}">
-                                            <button type="button" class="btn btn-sm btn-primary btn-create">
-                                                <span class="glyphicon glyphicon-plus"></span> Fluxo-Diário
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <tr>
-                                        <th>Dia</th>
-                                        <th>Rendimento</th>
-                                        <th>Retira do dia</th>
-                                        <th>Total Vendas</th>
-                                        <th>Saldo</th>
-                                        <th class="text-center">Ação</th>
-                                    </tr>
-                                    </thead>
-                                    @foreach($fluxos as $fluxo)
+                                <div class="table-responsive">
+                                    <table class="table table-striped bunitu">
+                                        <thead>
+                                        <div class="col col-xs-12 text-right">
+                                            <a href="{{route('fluxo.create')}}">
+                                                <button type="button" class="btn btn-sm btn-primary btn-create">
+                                                    <span class="glyphicon glyphicon-plus"></span> Fluxo-Diário
+                                                </button>
+                                            </a>
+                                        </div>
                                         <tr>
-                                            <td>{{date_format(new DateTime($fluxo->dia), "d/m/Y")}}</td>
-                                            <td>{{$fluxo->rendimento}}</td>
-                                            <td>{{$fluxo->retirada_dia}} </td>
-                                            <td>{{$fluxo->total_vendas}}</td>
-                                            <td>{{$fluxo->saldo}} </td>
-                                            <td class="text-center">
-                                                <a class='btn btn-info btn-xs' href="../editar/fluxo/{{$fluxo->id}}">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </a>
-                                                <a onclick="return confirm('Deseja excluir esse registro?')"
-                                                   href="../deletar/fluxo/{{$fluxo->id}}"
-                                                   class="btn btn-danger btn-xs">
-                                                    <span class="glyphicon glyphicon-remove"></span> Excluir
-                                                </a>
-                                            </td>
+                                            <th>Dia</th>
+                                            <th>Rendimento</th>
+                                            <th>Retira do dia</th>
+                                            <th>Total Vendas</th>
+                                            <th>Saldo</th>
+                                            <th class="text-center">Ação</th>
                                         </tr>
-                                    @endforeach
-                                </table>
+                                        </thead>
+                                        @foreach($fluxos as $fluxo)
+                                            <tr>
+                                                <td>{{date_format(new DateTime($fluxo->dia), "d/m/Y")}}</td>
+                                                <td>{{$fluxo->rendimento}}</td>
+                                                <td>{{$fluxo->retirada_dia}} </td>
+                                                <td>{{$fluxo->total_vendas}}</td>
+                                                <td>{{$fluxo->saldo}} </td>
+                                                <td class="text-center">
+                                                    <a class='btn btn-info btn-xs'
+                                                       href="../editar/fluxo/{{$fluxo->id}}">
+                                                        <span class="glyphicon glyphicon-edit"></span> Editar
+                                                    </a>
+                                                    <a onclick="return confirm('Deseja excluir esse registro?')"
+                                                       href="../deletar/fluxo/{{$fluxo->id}}"
+                                                       class="btn btn-danger btn-xs">
+                                                        <span class="glyphicon glyphicon-remove"></span> Excluir
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </table>
+                                </div>
                             @endif
                         </div>
                     </div>

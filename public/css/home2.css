@@ -28,8 +28,8 @@ div.caixadentro{
 }
 div.azul{
     background: #dddddd;
-    margin-left: 15px;
-    width: 300px;
+    margin-left: 5px;
+    /*width: 300px;*/
     border-radius: 10%;
 }
 div.verde{

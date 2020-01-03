@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,8 @@ class AdministradorController extends Controller
 
     public function index()
     {
-        return view('admin.index');
+        $admin = DB::table('administrador')->find(Auth::id());
+        return view('admin.index', compact('admin'));
     }
 
     public function edit()

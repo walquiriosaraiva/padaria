@@ -77,57 +77,59 @@
                                     </button>
                                 </a>
                             @else
-                                <table class="table table-striped bunitu">
-                                    <thead>
-                                    <div class="col col-xs-12 text-right">
-                                        <a href="{{route('saida-estoque.create')}}">
-                                            <button type="button" class="btn btn-sm btn-primary btn-create">
-                                                <span class="glyphicon glyphicon-plus"></span> Saída Estoque
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <tr>
-                                        <th class="col-lg-3 text-left">Produto</th>
-                                        <th class="col-lg-2 text-left">Unidade Medida</th>
-                                        <th class="col-lg-2 text-center">Quantidade</th>
-                                        <th class="col-lg-2 text-center">Valor Unitário R$</th>
-                                        <th class="col-lg-1 text-center">Total R$</th>
-                                        <th class="col-lg-2 text-center">Ação</th>
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr class="alert alert-warning">
-                                        <th>TOTAL</th>
-                                        <th></th>
-                                        <th class="text-center">{{ $saidaEstoque->quantidade_total }}</th>
-                                        <th></th>
-                                        <th class="text-center">{{ $saidaEstoque->soma_total }}</th>
-                                        <th></th>
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    @foreach($saidaEstoque as $estoque)
+                                <div class="table-responsive">
+                                    <table class="table table-striped bunitu">
+                                        <thead>
+                                        <div class="col col-xs-12 text-right">
+                                            <a href="{{route('saida-estoque.create')}}">
+                                                <button type="button" class="btn btn-sm btn-primary btn-create">
+                                                    <span class="glyphicon glyphicon-plus"></span> Saída Estoque
+                                                </button>
+                                            </a>
+                                        </div>
                                         <tr>
-                                            <td class="text-uppercase">{{$estoque->produto}} </td>
-                                            <td>{{$estoque->unidade_medida}}</td>
-                                            <td class="text-center">{{$estoque->quantidade}} </td>
-                                            <td class="text-center">{{$estoque->val_unitario}} </td>
-                                            <td class="text-center">{{$estoque->val_total}} </td>
-                                            <td class="text-center">
-                                                <a class='btn btn-info btn-xs'
-                                                   href="../editar/saida-estoque/{{$estoque->id}}">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </a>
-                                                <a onclick="return confirm('Deseja excluir esse registro?')"
-                                                   href="../deletar/saida-estoque/{{$estoque->id}}"
-                                                   class="btn btn-danger btn-xs">
-                                                    <span class="glyphicon glyphicon-remove"></span> Excluir
-                                                </a>
-                                            </td>
+                                            <th class="col-lg-3 text-left">Produto</th>
+                                            <th class="col-lg-2 text-left">Unidade Medida</th>
+                                            <th class="col-lg-2 text-center">Quantidade</th>
+                                            <th class="col-lg-2 text-center">Valor Unitário R$</th>
+                                            <th class="col-lg-1 text-center">Total R$</th>
+                                            <th class="col-lg-2 text-center">Ação</th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tfoot>
+                                        <tr class="alert alert-warning">
+                                            <th>TOTAL</th>
+                                            <th></th>
+                                            <th class="text-center">{{ $saidaEstoque->quantidade_total }}</th>
+                                            <th></th>
+                                            <th class="text-center">{{ $saidaEstoque->soma_total }}</th>
+                                            <th></th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        @foreach($saidaEstoque as $estoque)
+                                            <tr>
+                                                <td class="text-uppercase">{{$estoque->produto}} </td>
+                                                <td>{{$estoque->unidade_medida}}</td>
+                                                <td class="text-center">{{$estoque->quantidade}} </td>
+                                                <td class="text-center">{{$estoque->val_unitario}} </td>
+                                                <td class="text-center">{{$estoque->val_total}} </td>
+                                                <td class="text-center">
+                                                    <a class='btn btn-info btn-xs'
+                                                       href="../editar/saida-estoque/{{$estoque->id}}">
+                                                        <span class="glyphicon glyphicon-edit"></span> Editar
+                                                    </a>
+                                                    <a onclick="return confirm('Deseja excluir esse registro?')"
+                                                       href="../deletar/saida-estoque/{{$estoque->id}}"
+                                                       class="btn btn-danger btn-xs">
+                                                        <span class="glyphicon glyphicon-remove"></span> Excluir
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             @endif
                         </div>
                     </div>

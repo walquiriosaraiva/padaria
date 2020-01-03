@@ -64,7 +64,9 @@
                                 <li><a href="{{route('saida-estoque.show')}}">Saída Estoque</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Configurações</a></li>
+                        @if(isset($admin) && $admin->id)
+                            <li><a href="#">Configurações</a></li>
+                        @endif
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="{{route('admin.edit')}}"><span
