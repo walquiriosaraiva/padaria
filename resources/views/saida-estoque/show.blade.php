@@ -1,20 +1,20 @@
 @extends('home')
 
-@section('titulo','Entrada Estoque')
+@section('titulo','Saída Estoque')
 
 @section('conteudo')
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Entrada Estoque</div>
+                    <div class="panel-heading">Saída Estoque</div>
                     <div class="panel-body">
                         <div class="row col-md-10 col-md-offset-1 custyle">
 
                             @if(session('inser') == true)
                                 <div class="alert alert-success col-md-10 col-md-offset-1">
                                     <strong>Sucesso!</strong>
-                                    A entrada do Produto {{ session("produto") }} foi adicionado.
+                                    A saída do Produto {{ session("produto") }} foi adicionado.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -24,7 +24,7 @@
                             @if(session('update') == true)
                                 <div class="alert alert-success col-md-10 col-md-offset-1">
                                     <strong>Sucesso!</strong>
-                                    A entrada do Produto {{ session("produto") }} foi atualizado.
+                                    A saída do Produto {{ session("produto") }} foi atualizado.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -34,7 +34,7 @@
                             @if(session('delete') == true)
                                 <div class="alert alert-success col-md-10 col-md-offset-1">
                                     <strong>Sucesso!</strong>
-                                    A entrada do Produto {{ session("produto") }} foi removido.
+                                    A saída do Produto {{ session("produto") }} foi removido.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -42,7 +42,7 @@
                             @endif
                             <div class="panel-body">
                                 <form class="form-horizontal col-md-12 col-md-offset-1" role="form"
-                                      action="{{route('entrada-estoque.show')}}" method="post">
+                                      action="{{route('saida-estoque.show')}}" method="post">
                                     {{ csrf_field() }}
                                     <div class="form-group col-md-10{{ $errors->has('produto_id') ? ' has-error' : '' }}">
                                         <label for="produto_id" class="control-label">Produto: </label>
@@ -70,19 +70,19 @@
                                     Você não possui nenhum produto cadastrado.
                                 </div>
 
-                                <a href="{{route('entrada-estoque.create')}}">
+                                <a href="{{route('saida-estoque.create')}}">
                                     <button type="button"
                                             class="btn btn-primary btn-lg btn-create col-md-3 col-md-offset-4">
-                                        <span class="glyphicon glyphicon-plus"></span> Entrada Estoque
+                                        <span class="glyphicon glyphicon-plus"></span> Saída Estoque
                                     </button>
                                 </a>
                             @else
                                 <table class="table table-striped bunitu">
                                     <thead>
                                     <div class="col col-xs-12 text-right">
-                                        <a href="{{route('entrada-estoque.create')}}">
+                                        <a href="{{route('saida-estoque.create')}}">
                                             <button type="button" class="btn btn-sm btn-primary btn-create">
-                                                <span class="glyphicon glyphicon-plus"></span> Entrada Estoque
+                                                <span class="glyphicon glyphicon-plus"></span> Saída Estoque
                                             </button>
                                         </a>
                                     </div>
@@ -99,14 +99,14 @@
                                     <tr class="alert alert-warning">
                                         <th>TOTAL</th>
                                         <th></th>
-                                        <th class="text-center">{{ $entradaEstoque->quantidade_total }}</th>
+                                        <th class="text-center">{{ $saidaEstoque->quantidade_total }}</th>
                                         <th></th>
-                                        <th class="text-center">{{ $entradaEstoque->soma_total }}</th>
+                                        <th class="text-center">{{ $saidaEstoque->soma_total }}</th>
                                         <th></th>
                                     </tr>
                                     </tfoot>
                                     <tbody>
-                                    @foreach($entradaEstoque as $estoque)
+                                    @foreach($saidaEstoque as $estoque)
                                         <tr>
                                             <td class="text-uppercase">{{$estoque->produto}} </td>
                                             <td>{{$estoque->unidade_medida}}</td>
@@ -115,11 +115,11 @@
                                             <td class="text-center">{{$estoque->val_total}} </td>
                                             <td class="text-center">
                                                 <a class='btn btn-info btn-xs'
-                                                   href="../editar/entrada-estoque/{{$estoque->id}}">
+                                                   href="../editar/saida-estoque/{{$estoque->id}}">
                                                     <span class="glyphicon glyphicon-edit"></span> Editar
                                                 </a>
                                                 <a onclick="return confirm('Deseja excluir esse registro?')"
-                                                   href="../deletar/entrada-estoque/{{$estoque->id}}"
+                                                   href="../deletar/saida-estoque/{{$estoque->id}}"
                                                    class="btn btn-danger btn-xs">
                                                     <span class="glyphicon glyphicon-remove"></span> Excluir
                                                 </a>

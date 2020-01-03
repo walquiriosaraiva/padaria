@@ -31,18 +31,14 @@ class ProdutoController extends Controller
      */
     public function show()
     {
-        /*
-        echo '<pre>';
-        var_dump($this->produto);
-        exit;
-        */
         $produtos = $this->produto->all();
         $count = $produtos->count();
 
         foreach ($produtos as $chaveProduto => $descricaoProduto):
             $descricaoProduto->setAttribute('unidade_medida', $this->getUnidadeMedida($descricaoProduto->unidade_medida_id));
-            $descricaoProduto->setAttribute('saldo_estoque', $this->getSaldoEntradaEstoque($descricaoProduto->id) + $this->getSaldoSaidaEstoque($descricaoProduto->id));
-            $descricaoProduto->setAttribute('unitario', 'R$ ' . $this->getValUnitarioEntrada($descricaoProduto->id)['val_unitario']);
+            $descricaoProduto->setAttribute('saldo_estoque', $this->getSaldoEntradaEstoque($descricaoProduto->id) - $this->getSaldoSaidaEstoque($descricaoProduto->id));
+            $descricaoProduto->setAttribute('unitario', number_format($this->getValUnitarioEntrada($descricaoProduto->id), 2, ',', '.'));
+            $descricaoProduto->setAttribute('total', number_format($this->getValUnitarioEntrada($descricaoProduto->id) * ($this->getSaldoEntradaEstoque($descricaoProduto->id) - $this->getSaldoSaidaEstoque($descricaoProduto->id)), 2, ',', '.'));
         endforeach;
 
         return view('produto.show', compact('produtos', 'count'));
@@ -54,15 +50,30 @@ class ProdutoController extends Controller
      */
     public function getValUnitarioEntrada($produto_id)
     {
-        $entradaEstoque = DB::table('entrada_estoque')->where('produto_id', '=', $produto_id)->get()->first();
+        $entradaEstoque = DB::table('entrada_estoque')->where('produto_id', '=', $produto_id)->latest()->first();
 
-        $arDados = array('val_unitario' => 0, 'quantidade' => 0);
+        $valUnitario = 0;
         if (!empty($entradaEstoque) && $entradaEstoque->val_unitario > 0):
-            $arDados['val_unitario'] = number_format($entradaEstoque->val_unitario, 2, ',', '.');
-            $arDados['quantidade'] = $entradaEstoque->quantidade;
+            $valUnitario = $entradaEstoque->val_unitario;
         endif;
 
-        return $arDados;
+        return $valUnitario;
+    }
+
+    /**
+     * @param $produto_id
+     * @return mixed
+     */
+    public function getValUnitarioSaida($produto_id)
+    {
+        $saidaEstoque = DB::table('saida_estoque')->where('produto_id', '=', $produto_id)->latest()->first();
+
+        $valUnitario = 0;
+        if (!empty($saidaEstoque) && $saidaEstoque->val_unitario > 0):
+            $valUnitario = $saidaEstoque->val_unitario;
+        endif;
+
+        return $valUnitario;
     }
 
     /**
@@ -72,6 +83,7 @@ class ProdutoController extends Controller
     public function getSaldoEntradaEstoque($produto_id)
     {
         $entradaEstoque = DB::table('entrada_estoque')->where('produto_id', '=', $produto_id)->get();
+
         $quantidade = 0;
         foreach ($entradaEstoque as $key => $value):
             if ($value->produto_id == $produto_id):
@@ -92,7 +104,7 @@ class ProdutoController extends Controller
         $quantidade = 0;
         foreach ($saidaEstoque as $key => $value):
             if ($value->produto_id == $produto_id):
-                $quantidade = $value->quantidade;
+                $quantidade += $value->quantidade;
             endif;
         endforeach;
 
@@ -162,6 +174,7 @@ class ProdutoController extends Controller
     /**
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function delete($id)
     {

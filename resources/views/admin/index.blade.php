@@ -41,7 +41,7 @@
 
                             <div class="row azul col-md-2 well-sm center-block" style="margin-top: 1%;">
                                 <p class="lead"> <img src="/img/saida.png" class="center-block"/> </p>
-                                <p><a class="btn btn-lg btn-primary center-block" href="{{route('produto.create')}}" role="button">Saída Estoque</a></p>
+                                <p><a class="btn btn-lg btn-primary center-block" href="{{route('saida-estoque.create')}}" role="button">Saída Estoque</a></p>
                             </div>
 
                         </div>

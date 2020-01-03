@@ -5,7 +5,7 @@
 @section('conteudo')
     <div class="container">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Controle de Produtos</div>
                     <div class="panel-body">
@@ -53,7 +53,7 @@
                                     </button>
                                 </a>
                             @else
-                                <table class="table table-striped bunitu">
+                                <table class="table table-striped bunitu table-responsive">
                                     <thead>
                                     <div class="col col-xs-12 text-right">
                                         <a href="{{route('produto.create')}}">
@@ -63,23 +63,21 @@
                                         </a>
                                     </div>
                                     <tr>
-                                        <th class="text-center">Código do Produto</th>
-                                        <th class="text-left">Descrição</th>
-                                        <th class="text-left">Unidade Medida</th>
-                                        <th class="text-center">Valor Unitário</th>
-                                        <th class="text-center">Saldo em Estque</th>
-                                        <th class="text-center">Total</th>
-                                        <th class="col-lg-3 text-center">Ação</th>
+                                        <th class="col-lg-3 text-left">Descrição</th>
+                                        <th class="col-lg-2 text-left">Unidade Medida</th>
+                                        <th class="col-lg-2 text-center">Valor Unitário R$</th>
+                                        <th class="col-lg-2 text-center">Saldo em Estque</th>
+                                        <th class="col-lg-1 text-center">Total R$</th>
+                                        <th class="col-lg-2 text-center">Ação</th>
                                     </tr>
                                     </thead>
                                     @foreach($produtos as $produto)
                                         <tr>
-                                            <td>{{$produto->id}}</td>
                                             <td class="text-uppercase">{{$produto->descricao}} </td>
                                             <td>{{$produto->unidade_medida}}</td>
-                                            <td class="text-center">{{$produto->unitario}} </td>
-                                            <td class="text-center">{{$produto->saldo_estoque}} </td>
-                                            <td class="text-center">{{$produto->val_total}} </td>
+                                            <td class="text-center alert alert-success">{{$produto->unitario}} </td>
+                                            <td class="text-center alert alert-success">{{$produto->saldo_estoque}} </td>
+                                            <td class="text-center alert alert-success">{{$produto->total}} </td>
                                             <td class="text-center">
                                                 <a class='btn btn-info btn-xs' href="../editar/produto/{{$produto->id}}">
                                                     <span class="glyphicon glyphicon-edit"></span> Editar

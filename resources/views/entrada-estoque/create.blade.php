@@ -66,9 +66,9 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6{{ $errors->has('val_unitario') ? ' has-error' : '' }}">
+                            <div class="form-group col-md-5{{ $errors->has('val_unitario') ? ' has-error' : '' }}">
                                 <label for="val_unitario" class="control-label"> Valor Unitário: </label>
-                                <div class="input-group ">
+                                <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
                                     <input id="val_unitario" type="text" class="form-control" name="val_unitario"
                                            value="{{ old('val_unitario') }}">
@@ -78,6 +78,14 @@
                                             <strong>{{ $errors->first('val_unitario') }}</strong>
                                         </span>
                                 @endif
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="val_unitario" class="control-label"> Valor Total: </label>
+                                <div class="input-group ">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                    <input id="total" type="text" class="form-control" name="total" disabled="disabled">
+                                </div>
                             </div>
 
                             <div class="form-group col-md-10">
@@ -91,4 +99,28 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            jQuery("#quantidade, #val_unitario").change(function (e) {
+                var form_data = new FormData();
+                form_data.append('quantidade', $('#quantidade').val());
+                form_data.append('val_unitario', $('#val_unitario').val());
+                form_data.append('_token', '{{csrf_token()}}');
+                $.ajax({
+                    url: "{{ route('estoque.total') }}",
+                    data: form_data,
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        $('#total').val(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(status);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

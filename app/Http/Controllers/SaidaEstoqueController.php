@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\EntradaEstoque;
 use App\Model\Produto;
+use App\Model\SaidaEstoque;
 use App\Model\UnidadeMedida;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class EntradaEstoqueController extends Controller
+class SaidaEstoqueController extends Controller
 {
     private $produto;
     private $unidade_medida;
-    private $entrada_estoque;
+    private $saida_estoque;
 
-    function __construct(Produto $produto, UnidadeMedida $unidadeMedida, EntradaEstoque $entradaEstoque)
+    function __construct(Produto $produto, UnidadeMedida $unidadeMedida, SaidaEstoque $saidaEstoque)
     {
         $this->middleware('auth');
         $this->produto = $produto;
         $this->unidade_medida = $unidadeMedida;
-        $this->entrada_estoque = $entradaEstoque;
+        $this->saida_estoque = $saidaEstoque;
 
     }
 
@@ -30,45 +30,46 @@ class EntradaEstoqueController extends Controller
      */
     public function show(Request $request)
     {
+
         $data = $request->all();
         if (isset($data['created_at']) && $data['created_at'] || isset($data['produto_id']) && $data['produto_id']):
             if (isset($data['created_at']) && $data['created_at'] && isset($data['produto_id']) && $data['produto_id']):
-                $entradaEstoque = $this->entrada_estoque->all()
-                    ->where('created_at', '>=', $data['created_at'] . ' 00:00:00')
-                    ->where('created_at', '<=', $data['created_at'] . ' 23:59:00')
+                $saidaEstoque = $this->saida_estoque->all()
+                    ->where('created_at', '>=', $data['created_at'].' 00:00:00')
+                    ->where('created_at', '<=', $data['created_at'].' 23:59:00')
                     ->where('produto_id', '=', $data['produto_id'])
                     ->sortBy("produto_id");
-            elseif (isset($data['created_at']) && $data['created_at'] && !isset($data['produto_id']) && !$data['produto_id']):
-                $entradaEstoque = $this->entrada_estoque->all()
-                    ->where('created_at', '>=', $data['created_at'] . ' 00:00:00')
-                    ->where('created_at', '<=', $data['created_at'] . ' 23:59:00')
+            elseif(isset($data['created_at']) && $data['created_at'] && !isset($data['produto_id']) && !$data['produto_id']):
+                $saidaEstoque = $this->saida_estoque->all()
+                    ->where('created_at', '>=', $data['created_at'].' 00:00:00')
+                    ->where('created_at', '<=', $data['created_at'].' 23:59:00')
                     ->sortBy("produto_id");
-            elseif (!isset($data['created_at']) && !$data['created_at'] && isset($data['produto_id']) && $data['produto_id']):
-                $entradaEstoque = $this->entrada_estoque->all()
+            elseif(!isset($data['created_at']) && !$data['created_at'] && isset($data['produto_id']) && $data['produto_id']):
+                $saidaEstoque = $this->saida_estoque->all()
                     ->where('produto_id', '=', $data['produto_id'])
                     ->sortBy("produto_id");
             endif;
         else:
             $data['created_at'] = null;
             $data['produto_id'] = null;
-            $entradaEstoque = $this->entrada_estoque->all()->sortBy("produto_id");
+            $saidaEstoque = $this->saida_estoque->all()->sortBy("produto_id");
         endif;
 
-        $count = $entradaEstoque->count();
+        $count = $saidaEstoque->count();
         $qtdTotal = 0;
         $somaTotal = 0;
-        foreach ($entradaEstoque as $key => $value):
+        foreach ($saidaEstoque as $key => $value):
             $value->setAttribute('unidade_medida', $this->getUnidadeMedida($value->unidade_medida_id));
             $value->setAttribute('produto', $this->getProduto($value->produto_id));
             $value->setAttribute('val_total', number_format($value->quantidade * $value->val_unitario, 2, ',', '.'));
             $qtdTotal += $value->quantidade;
             $somaTotal += $value->quantidade * $value->val_unitario;
         endforeach;
-        $entradaEstoque->quantidade_total = $qtdTotal;
-        $entradaEstoque->soma_total = number_format($somaTotal, 2, ',', '.');
+        $saidaEstoque->quantidade_total = $qtdTotal;
+        $saidaEstoque->soma_total = number_format($somaTotal, 2, ',', '.');
 
         $produto = $this->produto->all();
-        return view('entrada-estoque.show', compact('entradaEstoque', 'count', 'produto', 'data'));
+        return view('saida-estoque.show', compact('saidaEstoque', 'count', 'produto', 'data'));
     }
 
     /**
@@ -112,7 +113,7 @@ class EntradaEstoqueController extends Controller
     {
         $unidade_medida = $this->unidade_medida->all();
         $produto = $this->produto->all();
-        return view('entrada-estoque.create', compact('unidade_medida', 'produto'));
+        return view('saida-estoque.create', compact('unidade_medida', 'produto'));
     }
 
     /**
@@ -129,27 +130,27 @@ class EntradaEstoqueController extends Controller
         ]);
 
         if ($validador->fails()) :
-            return redirect()->route('entrada-estoque.create')
+            return redirect()->route('saida-estoque.create')
                 ->withErrors($validador)
                 ->withInput();
         else :
-            $this->entrada_estoque->unidade_medida_id = $request->input('unidade_medida_id');
-            $this->entrada_estoque->produto_id = $request->input('produto_id');
-            $this->entrada_estoque->quantidade = $request->input('quantidade');
-            $this->entrada_estoque->val_unitario = $request->input('val_unitario');
-            $this->entrada_estoque->num_nota_fiscal = $request->input('num_nota_fiscal') ? $request->input('num_nota_fiscal') : 0;
+            $this->saida_estoque->unidade_medida_id = $request->input('unidade_medida_id');
+            $this->saida_estoque->produto_id = $request->input('produto_id');
+            $this->saida_estoque->quantidade = $request->input('quantidade');
+            $this->saida_estoque->val_unitario = $request->input('val_unitario');
+            $this->saida_estoque->num_cupom = $request->input('num_cupom') ? $request->input('num_cupom') : 0;
 
-            $entradaEstoque_ins = $this->entrada_estoque->save();
-            if ($entradaEstoque_ins) :
-                return redirect()->route('entrada-estoque.show')
+            $saidaEstoque_ins = $this->saida_estoque->save();
+            if ($saidaEstoque_ins) :
+                return redirect()->route('saida-estoque.show')
                     ->withInput()
-                    ->with(['inser' => true, 'produto' => $this->getProduto($this->entrada_estoque->produto_id)]);
+                    ->with(['inser' => true, 'produto' => $this->getProduto($this->saida_estoque->produto_id)]);
             endif;
         endif;
 
-        return redirect()->route('entrada-estoque.show')
+        return redirect()->route('saida-estoque.show')
             ->withInput()
-            ->with(['error' => true, 'entrada-estoque' => 'Erro ao inserir o produto']);
+            ->with(['error' => true, 'saida-estoque' => 'Erro ao inserir o produto']);
     }
 
     /**
@@ -159,17 +160,17 @@ class EntradaEstoqueController extends Controller
      */
     public function delete($id)
     {
-        $entradaEstoque = $this->entrada_estoque->find($id);
+        $saidaEstoque = $this->saida_estoque->find($id);
 
-        if ($entradaEstoque->delete()) :
-            return redirect()->route('entrada-estoque.show')
+        if ($saidaEstoque->delete()) :
+            return redirect()->route('saida-estoque.show')
                 ->withInput()
-                ->with(['delete' => true, 'produto' => $this->getProduto($entradaEstoque->produto_id)]);
+                ->with(['delete' => true, 'produto' => $this->getProduto($saidaEstoque->produto_id)]);
         endif;
 
-        return redirect()->route('entrada-estoque.show')
+        return redirect()->route('saida-estoque.show')
             ->withInput()
-            ->with(['error' => true, 'produto' => 'Erro ao excluir a entrada de estoque']);
+            ->with(['error' => true, 'produto' => 'Erro ao excluir a saída de estoque']);
     }
 
     /**
@@ -178,15 +179,15 @@ class EntradaEstoqueController extends Controller
      */
     public function edit($id)
     {
-        $entradaEstoque = $this->entrada_estoque->find($id);
+        $saidaEstoque = $this->saida_estoque->find($id);
         $unidade_medida = $this->unidade_medida->all();
         $produto = $this->produto->all();
 
-        if (empty($entradaEstoque)) :
+        if (empty($saidaEstoque)) :
             return "Aconteceu um erro";
         endif;
 
-        return view('entrada-estoque.edit', compact('produto', 'unidade_medida', 'entradaEstoque'));
+        return view('saida-estoque.edit', compact('produto', 'unidade_medida', 'saidaEstoque'));
     }
 
     /**
@@ -195,7 +196,7 @@ class EntradaEstoqueController extends Controller
      */
     function update(Request $request)
     {
-        $entradaEstoque = $this->entrada_estoque->find($request->input('id'));
+        $saidaEstoque = $this->saida_estoque->find($request->input('id'));
 
         $validador = Validator::make($request->all(), [
             'produto_id' => 'required',
@@ -210,38 +211,23 @@ class EntradaEstoqueController extends Controller
                 ->withInput($request->all());
         else :
 
-            $entradaEstoque->unidade_medida_id = $request->input('unidade_medida_id');
-            $entradaEstoque->produto_id = $request->input('produto_id');
-            $entradaEstoque->quantidade = $request->input('quantidade');
-            $entradaEstoque->val_unitario = $request->input('val_unitario');
-            $entradaEstoque->num_nota_fiscal = $request->input('num_nota_fiscal') ? $request->input('num_nota_fiscal') : 0;
+            $saidaEstoque->unidade_medida_id = $request->input('unidade_medida_id');
+            $saidaEstoque->produto_id = $request->input('produto_id');
+            $saidaEstoque->quantidade = $request->input('quantidade');
+            $saidaEstoque->val_unitario = $request->input('val_unitario');
+            $saidaEstoque->num_cupom = $request->input('num_cupom') ? $request->input('num_cupom') : 0;
 
-            $entradaEstoque_upt = $entradaEstoque->save();
-            if ($entradaEstoque_upt) :
-                return redirect()->route('entrada-estoque.show')
+            $saidaEstoque_upt = $saidaEstoque->save();
+            if ($saidaEstoque_upt) :
+                return redirect()->route('saida-estoque.show')
                     ->withInput()
-                    ->with(['update' => true, 'produto' => $this->getProduto($entradaEstoque->produto_id)]);
+                    ->with(['update' => true, 'produto' => $this->getProduto($saidaEstoque->produto_id)]);
             endif;
         endif;
 
-        return redirect()->route('entrada-estoque.show')
+        return redirect()->route('saida-estoque.show')
             ->withInput()
-            ->with(['error' => true, 'produto' => 'Erro ao atualizar a entrada estoque']);
-    }
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function total(Request $request)
-    {
-        $data = $request->all();
-        $response = 0;
-        if (isset($data['quantidade']) && $data['quantidade'] > 0 && isset($data['val_unitario']) && $data['val_unitario'] > 0):
-            $response = number_format($data['quantidade'] * $data['val_unitario'], 2, ',', '.');
-        endif;
-
-        return response()->json($response);
+            ->with(['error' => true, 'produto' => 'Erro ao atualizar a saída estoque']);
     }
 
 }

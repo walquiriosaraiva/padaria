@@ -1,6 +1,6 @@
 @extends('home')
 
-@section('titulo','Editar Entrada Estoque')
+@section('titulo','Cadastrar Saída Estoque')
 
 @section('conteudo')
 
@@ -8,13 +8,11 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Editar Entrada Estoque</div>
+                    <div class="panel-heading">Cadastrar Saída Estoque</div>
                     <div class="panel-body">
                         <form class="form-horizontal col-md-10 col-md-offset-1" role="form"
-                              action="{{route('entrada-estoque.update')}}" method="post">
+                              action="{{route('saida-estoque.store')}}" method="post">
                             {{ csrf_field() }}
-
-                            <input type="hidden" name="id" id="id" value="{{ $entradaEstoque->id }}">
 
                             <div class="form-group col-md-10{{ $errors->has('produto_id') ? ' has-error' : '' }}">
                                 <label for="produto_id" class="control-label">Produto: </label>
@@ -23,7 +21,7 @@
                                     <option data-tokens="ketchup mustard" value="">Selecione</option>
                                     @foreach($produto as $key=>$value)
                                         <option data-tokens="ketchup mustard"
-                                                value="{{ $value->id }}" {{ $entradaEstoque->produto_id == $value->id ? 'selected' : ''}}> {{ $value->descricao }}</option>
+                                                value="{{ $value->id }}"> {{ $value->descricao }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -35,7 +33,7 @@
                                     <option data-tokens="ketchup mustard" value="">Selecione</option>
                                     @foreach($unidade_medida as $key=>$value)
                                         <option data-tokens="ketchup mustard"
-                                                value="{{ $value->id }}" {{ $entradaEstoque->unidade_medida_id == $value->id ? 'selected' : ''}}> {{ $value->sigla }}</option>
+                                                value="{{ $value->id }}"> {{ $value->sigla }}</option>
                                     @endforeach
                                 </select>
 
@@ -46,13 +44,13 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-10{{ $errors->has('num_nota_fiscal') ? ' has-error' : '' }}">
-                                <label for="num_nota_fiscal" class="control-label"> Nota Fiscal: </label>
-                                <input id="num_nota_fiscal" type="number" class="form-control" name="num_nota_fiscal"
-                                       value="{{ $entradaEstoque->num_nota_fiscal }}">
-                                @if ($errors->has('num_nota_fiscal'))
+                            <div class="form-group col-md-10{{ $errors->has('num_cupom') ? ' has-error' : '' }}">
+                                <label for="num_cupom" class="control-label"> Cupom: </label>
+                                <input id="num_cupom" type="number" class="form-control" name="num_cupom"
+                                       value="{{ old('num_cupom') }}">
+                                @if ($errors->has('num_cupom'))
                                     <span class="help-block">
-                                            <strong>{{ $errors->first('num_nota_fiscal') }}</strong>
+                                            <strong>{{ $errors->first('num_cupom') }}</strong>
                                         </span>
                                 @endif
                             </div>
@@ -60,7 +58,7 @@
                             <div class="form-group col-md-10{{ $errors->has('qtd_minimo') ? ' has-error' : '' }}">
                                 <label for="quantidade" class="control-label"> Quantidade: </label>
                                 <input id="quantidade" type="number" class="form-control" name="quantidade"
-                                       value="{{ $entradaEstoque->quantidade }}">
+                                       value="{{ old('quantidade') }}">
                                 @if ($errors->has('quantidade'))
                                     <span class="help-block">
                                             <strong>{{ $errors->first('quantidade') }}</strong>
@@ -73,7 +71,7 @@
                                 <div class="input-group ">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
                                     <input id="val_unitario" type="text" class="form-control" name="val_unitario"
-                                           value="{{ $entradaEstoque->val_unitario }}">
+                                           value="{{ old('val_unitario') }}">
                                 </div>
                                 @if ($errors->has('val_unitario'))
                                     <span class="help-block">
@@ -92,8 +90,8 @@
 
                             <div class="form-group col-md-10">
                                 {!! csrf_field() !!}
-                                <button type="submit" class="control-label btn btn-primary">Alterar</button>
-                                <a class="control-label btn btn-danger" href="{{route('entrada-estoque.show')}}">Cancelar</a>
+                                <button type="submit" class="control-label btn btn-primary">Cadastrar</button>
+                                <a class="control-label btn btn-danger" href="{{route('saida-estoque.show')}}">Cancelar</a>
                             </div>
                         </form>
                     </div>
@@ -104,7 +102,6 @@
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-
             jQuery("#quantidade, #val_unitario").change(function (e) {
                 var form_data = new FormData();
                 form_data.append('quantidade', $('#quantidade').val());
@@ -124,9 +121,6 @@
                     }
                 });
             });
-
-            jQuery("#quantidade").change();
-            jQuery("#val_unitario").change();
         });
     </script>
 @endsection

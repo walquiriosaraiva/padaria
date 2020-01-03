@@ -41,6 +41,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('entrada-estoque', 'EntradaEstoqueController@create')->name('entrada-estoque.create');
         Route::post('entrada-estoque', 'EntradaEstoqueController@store')->name('entrada-estoque.store');
+
+        Route::get('saida-estoque', 'SaidaEstoqueController@create')->name('saida-estoque.create');
+        Route::post('saida-estoque', 'SaidaEstoqueController@store')->name('saida-estoque.store');
     });
 
     // Rotas de controle
@@ -64,6 +67,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('entrada-estoque', 'EntradaEstoqueController@show')->name('entrada-estoque.show');
         Route::post('entrada-estoque', 'EntradaEstoqueController@show')->name('entrada-estoque.show');
+
+        Route::get('saida-estoque', 'SaidaEstoqueController@show')->name('saida-estoque.show');
+        Route::post('saida-estoque', 'SaidaEstoqueController@show')->name('saida-estoque.show');
     });
 
     // Rotas de Edição
@@ -95,6 +101,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('entrada-estoque/{id}', 'EntradaEstoqueController@edit')->name('entrada-estoque.edit');
         Route::post('entrada-estoque', 'EntradaEstoqueController@update')->name('entrada-estoque.update');
+
+        Route::get('saida-estoque/{id}', 'SaidaEstoqueController@edit')->name('saida-estoque.edit');
+        Route::post('saida-estoque', 'SaidaEstoqueController@update')->name('saida-estoque.update');
     });
 
     // Rotas de Exclusão
@@ -108,6 +117,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('boleto/{id}', 'BoletoController@delete')->name('boleto.delete');
         Route::get('produto/{id}', 'ProdutoController@delete')->name('produto.delete');
         Route::get('entrada-estoque/{id}', 'EntradaEstoqueController@delete')->name('entrada-estoque.delete');
+        Route::get('saida-estoque/{id}', 'SaidaEstoqueController@delete')->name('saida-estoque.delete');
+    });
+
+    Route::group(['prefix' => 'calcular'], function () {
+        Route::post('estoque', 'EntradaEstoqueController@total')->name('estoque.total');
     });
 
 });

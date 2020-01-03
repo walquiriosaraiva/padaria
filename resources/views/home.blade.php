@@ -47,6 +47,7 @@
                                 <li><a href={{route('funcionario.create')}}>Funcionário</a></li>
                                 <li><a href={{route('produto.create')}}>Produto</a></li>
                                 <li><a href={{route('entrada-estoque.create')}}>Entrada Estoque</a></li>
+                                <li><a href={{route('saida-estoque.create')}}>Saída Estoque</a></li>
                             </ul>
                         </li>
                         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -60,6 +61,7 @@
                                 <li><a href="{{route('funcionario.show')}}">Funcionários</a></li>
                                 <li><a href="{{route('produto.show')}}">Produtos</a></li>
                                 <li><a href="{{route('entrada-estoque.show')}}">Entrada Estoque</a></li>
+                                <li><a href="{{route('saida-estoque.show')}}">Saída Estoque</a></li>
                             </ul>
                         </li>
                         <li><a href="#">Configurações</a></li>
