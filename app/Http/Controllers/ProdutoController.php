@@ -33,13 +33,19 @@ class ProdutoController extends Controller
     {
         $produtos = $this->produto->all();
         $count = $produtos->count();
+        $qtdTotal = 0;
+        $somaTotal = 0;
 
         foreach ($produtos as $chaveProduto => $descricaoProduto):
             $descricaoProduto->setAttribute('unidade_medida', $this->getUnidadeMedida($descricaoProduto->unidade_medida_id));
             $descricaoProduto->setAttribute('saldo_estoque', $this->getSaldoEntradaEstoque($descricaoProduto->id) - $this->getSaldoSaidaEstoque($descricaoProduto->id));
             $descricaoProduto->setAttribute('unitario', number_format($this->getValUnitarioEntrada($descricaoProduto->id), 2, ',', '.'));
             $descricaoProduto->setAttribute('total', number_format($this->getValUnitarioEntrada($descricaoProduto->id) * ($this->getSaldoEntradaEstoque($descricaoProduto->id) - $this->getSaldoSaidaEstoque($descricaoProduto->id)), 2, ',', '.'));
+            $qtdTotal += $this->getSaldoEntradaEstoque($descricaoProduto->id) - $this->getSaldoSaidaEstoque($descricaoProduto->id);
+            $somaTotal += $this->getValUnitarioEntrada($descricaoProduto->id) * ($this->getSaldoEntradaEstoque($descricaoProduto->id) - $this->getSaldoSaidaEstoque($descricaoProduto->id));
         endforeach;
+        $produtos->quantidade_total = $qtdTotal;
+        $produtos->soma_total = number_format($somaTotal, 2, ',', '.');
 
         return view('produto.show', compact('produtos', 'count'));
     }

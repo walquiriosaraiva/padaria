@@ -71,6 +71,17 @@
                                         <th class="col-lg-2 text-center">Ação</th>
                                     </tr>
                                     </thead>
+                                    <tfoot>
+                                    <tr class="alert alert-warning">
+                                        <th>TOTAL</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th class="text-center">{{ $produtos->quantidade_total }}</th>
+                                        <th class="text-center">{{ $produtos->soma_total }}</th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
                                     @foreach($produtos as $produto)
                                         <tr>
                                             <td class="text-uppercase">{{$produto->descricao}} </td>
@@ -89,6 +100,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                    </tbody>
                                 </table>
                             @endif
                         </div>

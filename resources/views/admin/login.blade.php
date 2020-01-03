@@ -14,7 +14,7 @@
 
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input id="login" type="email" class="form-control" name="email" placeholder='Ex: fulanodetal@gmai.com' required autofocus>
+                        <input id="login" type="email" class="form-control" name="email" placeholder='Ex: fulanodetal@gmail.com' required autofocus>
                     </div>
 
                     @if ($errors->has('email'))
