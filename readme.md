@@ -51,7 +51,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
-## Link 
+## Link do sistema modelo
 https://github.com/Daniel-Santos9/Sistema_padaria/tree/master/Padaria
 
 ## Database
@@ -61,8 +61,8 @@ https://github.com/Daniel-Santos9/Sistema_padaria/tree/master/Padaria
 * `FLUSH PRIVILEGES;`
 
 ## Criar as Tabelas: ###
-* `php artisan migrate`
 * `php artisan key:generate`
+* `php artisan migrate`
 * `php artisan config:clear`
 * `php artisan config:cache`
 
@@ -81,16 +81,5 @@ https://github.com/Daniel-Santos9/Sistema_padaria/tree/master/Padaria
 * `php artisan db:seed --class=BancoSeeder`
 
 ## Permissões nas pastas 
-sudo chgrp -R www-data storage
-sudo chmod -R ug+rwx storage
-
-## ENTRADA ESTOQUE
-PRODUTO
-QUANTIDADE
-VALOR UNITÁRIO
-NOTA FISCAL
-
-## SAÍDA ESTOQUE
-PRODUTO
-QUANTIDADE
-VALOR VENDA
+* `sudo chgrp -R www-data storage`
+* `sudo chmod -R ug+rwx storage`
