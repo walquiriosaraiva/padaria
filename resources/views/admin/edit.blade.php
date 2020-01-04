@@ -16,7 +16,7 @@
                                 <label for="name" class="col-md-4 control-label">Nome: </label>
 
                                 <div class="col-md-6">
-                                    <input id="nome" type="text" class="form-control" name="nome" value="{{ $admin->name }}" required autofocus>
+                                    <input id="name" type="text" class="form-control" name="name" value="{{ $admin->name }}" required autofocus>
 
                                     @if ($errors->has('nome'))
                                         <span class="help-block">

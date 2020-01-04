@@ -12,18 +12,27 @@ class AdministradorController extends Controller
 {
     private $admin;
 
+    /**
+     * AdministradorController constructor.
+     * @param User $admin
+     */
     public function __construct(User $admin)
     {
         $this->middleware('auth');
         $this->admin = $admin;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        $admin = DB::table('administrador')->find(Auth::id());
-        return view('admin.index', compact('admin'));
+        return view('admin.index');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function edit()
     {
         $admin = $this->admin->find(Auth::id());
@@ -36,30 +45,23 @@ class AdministradorController extends Controller
         return view('admin.edit', compact('admin'));
     }
 
+    /**
+     * @param Request $req
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $req)
     {
         $id = Auth::id();
         $admin = $this->admin->find($id);
 
-        if (empty($req->input('senha')) and ($admin->email != $req->input('email'))) :
+        $validador = Validator::make($req->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:160'
+        ]);
+
+        if ($req->input('password')):
             $validador = Validator::make($req->all(), [
-                'nome' => 'required|string|max:255',
-                'email' => 'required|string|email|max:160|unique:users',
-            ]);
-        elseif (empty($req->input('senha') and ($admin->email == $req->input('email')))) :
-            $validador = Validator::make($req->all(), [
-                'nome' => 'required|string|max:255',
-            ]);
-        elseif (!empty($req->input('senha') and ($admin->email == $req->input('email')))) :
-            $validador = Validator::make($req->all(), [
-                'nome' => 'required|string|max:255',
-                'senha' => 'string|min:6|confirmed',
-            ]);
-        else :
-            $validador = Validator::make($req->all(), [
-                'nome' => 'required|string|max:255',
-                'email' => 'required|string|email|max:160|unique:users',
-                'senha' => 'string|min:6|confirmed',
+                'password' => 'required|string|min:6|confirmed'
             ]);
         endif;
 
@@ -68,19 +70,13 @@ class AdministradorController extends Controller
                 ->withErrors($validador)
                 ->withInput();
         else :
-            if (empty($req->input('senha') and ($admin->email != $req->input('email')))) :
-                $admin->name = $req->input('nome');
-                $admin->email = $req->input('email');
-            elseif (empty($req->input('senha') and ($admin->email == $req->input('email')))) :
-                $admin->name = $req->input('nome');
-            elseif (!empty($req->input('senha') and ($admin->email == $req->input('email')))) :
-                $admin->name = $req->input('nome');
-                $admin->password = bcrypt($req->input('senha'));;
-            else :
-                $admin->name = $req->input('nome');
-                $admin->email = $req->input('email');
-                $admin->password = bcrypt($req->input('senha'));
+
+            $admin->name = $req->input('name');
+            $admin->email = $req->input('email');
+            if ($req->input('password')):
+                $admin->password = bcrypt($req->input('password'));
             endif;
+
             $admin_upd = $admin->save();
 
             if ($admin_upd) :

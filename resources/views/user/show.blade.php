@@ -12,9 +12,9 @@
                         <div class="row col-md-10 col-md-offset-1 custyle">
 
                             @if(session('inser') == true)
-                                <div class="alert alert-success col-md-10 col-md-offset-1">
+                                <div class="alert alert-success">
                                     <strong>Sucesso!</strong>
-                                    O usuário {{ session("user") }} foi adicionada.
+                                    O usuário {{ session("user") }} foi adicionado.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -22,9 +22,9 @@
                             @endif
 
                             @if(session('update') == true)
-                                <div class="alert alert-success col-md-10 col-md-offset-1">
+                                <div class="alert alert-success">
                                     <strong>Sucesso!</strong>
-                                    O usuário {{ session("user") }} foi atualizada.
+                                    O usuário {{ session("user") }} foi atualizado.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -32,9 +32,9 @@
                             @endif
 
                             @if(session('delete') == true)
-                                <div class="alert alert-success col-md-10 col-md-offset-1">
+                                <div class="alert alert-success">
                                     <strong>Sucesso!</strong>
-                                    O usuário {{ session("user") }} foi removida
+                                    O usuário {{ session("user") }} foi removido
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>

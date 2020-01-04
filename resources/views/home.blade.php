@@ -64,7 +64,7 @@
                                 <li><a href="{{route('saida-estoque.show')}}">Saída Estoque</a></li>
                             </ul>
                         </li>
-                        @if(isset($admin) && $admin->id)
+                        @if(in_array(Auth::user()->perfil, array(1, 2)))
                             <li><a href="{{route('user.show')}}">Usuários</a></li>
                         @endif
                     </ul>

@@ -12,7 +12,7 @@
                         <div class="row col-md-10 col-md-offset-1 custyle">
 
                             @if(session('inser') == true)
-                                <div class="alert alert-success col-md-10 col-md-offset-1">
+                                <div class="alert alert-success">
                                     <strong>Sucesso!</strong>
                                     O Fluxo Diário do dia: {{ date_format(new DateTime(old("dia")), "d/m/Y") }} foi
                                     adicionado.
@@ -23,7 +23,7 @@
                             @endif
 
                             @if(session('update') == true)
-                                <div class="alert alert-success col-md-10 col-md-offset-1">
+                                <div class="alert alert-success">
                                     <strong>Sucesso!</strong>
                                     O Fluxo Diário do dia: {{ date_format(new DateTime(old("dia")), "d/m/Y") }} foi
                                     atualizado.
@@ -34,7 +34,7 @@
                             @endif
 
                             @if(session('delete') == true)
-                                <div class="alert alert-success col-md-10 col-md-offset-1">
+                                <div class="alert alert-success">
                                     <strong>Sucesso!</strong>
                                     O Fluxo Diário do dia: {{ date_format(new DateTime(old("dia")), "d/m/Y") }} foi
                                     removido.

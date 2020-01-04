@@ -128,9 +128,15 @@ class UserController extends Controller
 
         $validador = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255',
             'perfil' => 'required',
         ]);
+
+        if($request->input('password') && $request->input('password_confirmation')):
+            $validador = Validator::make($request->all(), [
+                'password' => 'required|string|min:6|confirmed'
+            ]);
+        endif;
 
         if ($validador->fails()):
             return redirect()->to($this->getRedirectUrl())
@@ -141,7 +147,7 @@ class UserController extends Controller
             $user->email = $request->input('email');
             $user->perfil = $request->input('perfil');
             if ($request->input('password')):
-                $user->password = $request->input('password');
+                $user->password = bcrypt($request->input('password'));
             endif;
 
             if ($user->save()):

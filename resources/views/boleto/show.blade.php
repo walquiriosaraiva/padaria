@@ -12,7 +12,7 @@
                         <div class="row col-md-12 col-md-offset-0 custyle">
 
                             @if(session('inser') == true)
-                                <div class="alert alert-success col-md-10 col-md-offset-1">
+                                <div class="alert alert-success">
                                     <strong>Sucesso!</strong>
                                     O Boleto N° {{ session("boleto") }} foi adicionado.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -22,7 +22,7 @@
                             @endif
 
                             @if(session('update') == true)
-                                <div class="alert alert-success col-md-10 col-md-offset-1">
+                                <div class="alert alert-success">
                                     <strong>Sucesso!</strong>
                                     O Boleto N° {{ session("boleto") }} foi atualizado.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -32,7 +32,7 @@
                             @endif
 
                             @if(session('delete') == true)
-                                <div class="alert alert-success col-md-10 col-md-offset-1">
+                                <div class="alert alert-success">
                                     <strong>Sucesso!</strong>
                                     O Boleto N° {{ session("boleto") }} foi removido.
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
