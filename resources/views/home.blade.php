@@ -65,7 +65,7 @@
                             </ul>
                         </li>
                         @if(isset($admin) && $admin->id)
-                            <li><a href="#">Configurações</a></li>
+                            <li><a href="{{route('user.show')}}">Usuários</a></li>
                         @endif
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

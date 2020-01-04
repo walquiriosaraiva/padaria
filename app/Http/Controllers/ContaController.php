@@ -101,6 +101,7 @@ class ContaController extends Controller
     /**
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function delete($id)
     {
