@@ -159,6 +159,7 @@ class ProdutoController extends Controller
                 ->withErrors($validador)
                 ->withInput();
         else :
+            $this->produto->user_id = auth()->id();
             $this->produto->unidade_medida_id = $request->input('unidade_medida_id');
             $this->produto->descricao = $request->input('descricao');
             $this->produto->qtd_minimo = $request->input('qtd_minimo') ? $request->input('qtd_minimo') : 0;
@@ -233,6 +234,7 @@ class ProdutoController extends Controller
         else :
 
             $produto->unidade_medida_id = $request->input('unidade_medida_id');
+            $produto->user_id = auth()->id();
             $produto->descricao = $request->input('descricao');
             $produto->qtd_minimo = $request->input('qtd_minimo') ? $request->input('qtd_minimo') : 0;
             $produto->val_unitario = $request->input('val_unitario') ? $request->input('val_unitario') : 0;
